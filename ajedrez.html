@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html>
+<style>
+    .tabla{
+        margin: auto;
+        margin-top: 50px;
+        border-collapse: collapse;
+        border: 2px solid black;
+    }    
+    tr, td {  
+        border-collapse: collapse;
+        border: 2px solid black;
+            
+    }   
+
+   
+    .blanco{
+        background-color: beige;
+        text-align: center;
+        width: 80px;
+        height: 80px;  
+    }
+    .negro{
+        background-color:  saddlebrown;
+        text-align: center;
+        width: 80px;
+        height: 80px;     
+    }
+    .titulo{
+        text-align: center;
+        font-family: sans-serif;
+        font-size: 36px;
+    } 
+    .desc{
+        text-align: center;
+        font-family: sans-serif;
+        font-size: 15px;
+    } 
+    body{
+        background-color: rgb(209, 201, 201)
+    }
+    .center{
+        text-align: center;
+    }
+
+    .highlight {
+        position: relative;
+    }
+
+    .highlight::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background-color: rgba(100, 95, 95, 0.729); /* Set the desired color and opacity */
+    }
+ 
+</style>
+
+<script>
+    var turno = false; //false = turno blancas
+    var piezaSeleccionada;
+
+    var piezas = [];
+    
+    // tengo que crear las imagenes por cada una, ahora mismo estan creadas en el codigo duro, pero tengo que hacerlo de esta forma
+    // y no como esta para que cuando mueva una pieza tenga que crear otra 
+    var imageElement = document.createElement('img');
+
+    var piezaAComer = '';
+    function getCellPosition(event,id) {
+        
+        var clickedCell = event.currentTarget;
+        var rowIndex = clickedCell.parentNode.rowIndex;
+        var cellIndex = clickedCell.cellIndex;
+        
+        console.log(rowIndex+""+cellIndex);
+        piezas.push(rowIndex+""+cellIndex); 
+
+        var actual = piezas[piezas.length - 1];
+        var previo = piezas[piezas.length - 2];
+
+        // ver que pieza es para saber donde se puede mover   
+       
+        console.log(getImageAlt(actual));
+        console.log(getImageClass(actual));
+        // hacer los calculos para donde se peude mover
+            // piezas blancas - if class piezasBlancas only can move piezasBlancas classes
+
+            // Split the input string by space
+            var wordsArray = getTdClass(actual).split(" ");
+
+            var word2='nada';
+            // Check if there is a second word
+            if (wordsArray.length > 1) {
+                // Get the second word (word2) from the array
+                word2 = wordsArray[1].trim();
+                // Print the result
+                console.log(word2);
+            }
+           console.log(word2);
+           var audio = new Audio('http://images.chesscomfiles.com/chess-themes/sounds/_MP3_/default/move-self.mp3');
+
+            if(word2 == 'highlight'){     
+                
+                audio.play();           
+                deleteImage(actual);
+                
+                var myImage = document.getElementById(previo);
+                
+                // Move the image from sourceCell to targetCell
+                var imagentemporal = new Image();
+                
+                var actualElement = document.getElementById(actual);
+                imagentemporal.src = getImageSource(previo);
+                imagentemporal.alt =  getImageAlt(previo);
+                imagentemporal.className =  getImageClass(previo);
+
+                actualElement.appendChild(imagentemporal);
+                
+                
+                deleteImage(previo);
+                
+                
+                turno = !turno;
+                let myParagraph = document.getElementById('turno');
+                if(turno==false){
+                    myParagraph.textContent = 'blancas';
+                } 
+                if(turno==false){
+                    myParagraph.textContent = 'negras';
+                }
+                rotateElements();
+            }
+
+        removeClassFromTable();
+
+
+        
+
+        var piezaColor;
+        var piezaContraria;
+        if(turno==false){
+                piezaColor = 'piezaBlanca';
+                piezaContraria = 'piezaNegra';
+        } else {
+                piezaColor = 'piezaNegra';
+                piezaContraria = 'piezaBlanca';
+        }
+
+        if(turno==false && getImageClass(actual)==piezaColor){ // turno de las blancas
+            if(getImageAlt(actual)=='peon'){  
+                var pintar = parseInt(actual) - 10;
+                var tdElement = document.getElementById(pintar);
+                if (tdElement !== null &&  getImageClass(pintar)==null) {
+                        tdElement.classList.add("highlight");
+
+                }
+
+
+            
+                var inicial = [61, 62, 63, 64, 65, 66, 67, 68];
+                var pintar = parseInt(actual) - 20;
+                var tdElement = document.getElementById(pintar);
+                if (tdElement !== null &&  getImageClass(pintar)==null && inicial.includes(parseInt(actual))) {
+                        tdElement.classList.add("highlight");
+
+                }
+
+                /// optimizar
+                pintar = parseInt(actual) - 11;
+                tdElement = document.getElementById(pintar);
+                if (tdElement !== null &&  getImageClass(pintar)!=piezaColor &&  getImageClass(pintar)!=null) {
+                        tdElement.classList.add("highlight");
+                        piezaAComer = pintar;
+                }
+
+                
+                pintar = parseInt(actual) - 9;                
+                tdElement = document.getElementById(pintar);
+                if (tdElement !== null &&  getImageClass(pintar)!=piezaColor &&  getImageClass(pintar)!=null) {
+                        tdElement.classList.add("highlight");
+                        piezaAComer = pintar;
+                }
+
+               
+                            //////////////////////
+            }
+        } 
+
+        if(turno==true  && getImageClass(actual)==piezaColor){ // turno de las negras
+            if(getImageAlt(actual)=='peon'){        
+                var pintar = parseInt(actual) + 10;
+                var tdElement = document.getElementById(pintar);
+                if (tdElement !== null &&  getImageClass(pintar)==null) {
+                        tdElement.classList.add("highlight");
+                }
+
+                var inicial = [11, 12, 13, 14, 15, 16, 17, 18];
+                var pintar = parseInt(actual) + 20;
+                var tdElement = document.getElementById(pintar);                
+                if (tdElement !== null &&  getImageClass(pintar)==null && inicial.includes(parseInt(actual))) {
+                        tdElement.classList.add("highlight");
+
+                }
+
+                pintar = parseInt(actual) + 11;
+                tdElement = document.getElementById(pintar);
+                if (tdElement !== null &&  getImageClass(pintar)!=piezaColor &&  getImageClass(pintar)!=null) {
+                        tdElement.classList.add("highlight");
+                        piezaAComer = pintar;
+                }
+
+                
+                pintar = parseInt(actual) + 9;                
+                tdElement = document.getElementById(pintar);
+                if (tdElement !== null &&  getImageClass(pintar)!=piezaColor &&  getImageClass(pintar)!=null) {
+                        tdElement.classList.add("highlight");
+                        piezaAComer = pintar;
+                }
+            }
+        }
+            
+        if (getImageAlt(actual) === 'caballo' && getImageClass(actual)==piezaColor) {
+            const moves = [-21, -19, -12, -8, 8, 12, 19, 21];                
+            const currentPosition = parseInt(actual);
+
+            moves.forEach((move) => {
+                const newPosition = currentPosition + move;
+                const tdElement = document.getElementById(newPosition);
+
+                if (tdElement && getImageClass(newPosition) !== piezaColor) {
+                    tdElement.classList.add('highlight');                    
+                }
+            });
+        }
+             else if (getImageAlt(actual) == 'alfil' && getImageClass(actual)==piezaColor) {
+                const offsets = [-9, -11, 9, 11];
+                const highlightClass = "highlight";
+
+                function highlightSquares(offset) {
+                    for (let i = 1; i <= 7; i++) {
+                        var pintar = parseInt(actual) + (offset * i);
+                        pintar = pintar.toString();
+                        if (pintar.length < 2) {
+                            pintar = '0' + pintar;
+                        }
+                        const tdElement = document.getElementById(pintar);
+                       
+                        if (getImageClass(pintar) == piezaColor) {
+                            break;
+                        }
+                        if (tdElement == null) {
+                             break;
+                         }
+                        console.log(pintar);
+                        if (tdElement !== null){
+                            tdElement.classList.add(highlightClass);
+                        }
+                             
+                       if (getImageClass(pintar) == piezaContraria) {
+                            break;
+                        }     
+                        
+                    }
+                    
+                }
+                for (const offset of offsets) {
+                    highlightSquares(offset);
+                }
+        } else if (getImageAlt(actual) == 'torre' && getImageClass(actual)==piezaColor){
+            const offsets = [-10,-1,1,10];
+                const highlightClass = "highlight";
+
+                function highlightSquares(offset) {
+                    for (let i = 1; i <= 7; i++) {
+                        var pintar = parseInt(actual) + (offset * i);
+                        pintar = pintar.toString();
+                        if (pintar.length < 2) {
+                            pintar = '0' + pintar;
+                        }
+                        const tdElement = document.getElementById(pintar);
+                       
+                        if (getImageClass(pintar) == piezaColor) {
+                            break;
+                        }
+                        if (tdElement == null) {
+                             break;
+                         }
+                        console.log(pintar);
+                        if (tdElement !== null){
+                            tdElement.classList.add(highlightClass);
+                        }
+                             
+                       if (getImageClass(pintar) == piezaContraria) {
+                            break;
+                        }     
+                        
+                    }
+                    
+                }
+                for (const offset of offsets) {
+                    highlightSquares(offset);
+                }
+
+            
+        }else if (getImageAlt(actual) == 'reina' && getImageClass(actual)==piezaColor){
+            const offsets = [-9, -11, 9, 11, -10,-1,1,10];
+                const highlightClass = "highlight";
+
+                function highlightSquares(offset) {
+                    for (let i = 1; i <= 7; i++) {
+                        var pintar = parseInt(actual) + (offset * i);
+                        pintar = pintar.toString();
+                        if (pintar.length < 2) {
+                            pintar = '0' + pintar;
+                        }
+                        const tdElement = document.getElementById(pintar);
+                       
+                        if (getImageClass(pintar) == piezaColor) {
+                            break;
+                        }
+                        if (tdElement == null) {
+                             break;
+                         }
+                        console.log(pintar);
+                        if (tdElement !== null){
+                            tdElement.classList.add(highlightClass);
+                        }
+                             
+                       if (getImageClass(pintar) == piezaContraria) {
+                            break;
+                        }     
+                        
+                    }
+                    
+                }
+                for (const offset of offsets) {
+                    highlightSquares(offset);
+                }
+                
+        } else if (getImageAlt(actual) == 'rey'  && getImageClass(actual)==piezaColor) {
+            const moves = [-10, 10, -1, 1, -9, 9, -11, 11];
+
+            for (const move of moves) {
+                const newPosition = parseInt(actual) + move;
+                const tdElement = document.getElementById(newPosition);
+
+                if (tdElement && getImageClass(newPosition) !== piezaColor) {
+                tdElement.classList.add('highlight');
+                }
+            }
+        
+        }
+
+        console.log("----------------------------------");
+      
+    }
+
+    function removeClassFromTable() {
+        var table = document.getElementById('tablero');
+        var cells = table.getElementsByTagName('td');
+
+        for (var i = 0; i < cells.length; i++) {
+            if (cells[i].classList.contains('highlight')) {
+            cells[i].classList.remove('highlight');
+            }
+        }
+    }
+
+
+    function deleteImage(id) {
+      var table = document.getElementById(id);
+      table.innerHTML = "";
+    }
+
+    function getImageSource(cellId) {
+      var cell = document.getElementById(cellId);
+      
+      // Check if the cell exists and contains an image
+      if (cell && cell.getElementsByTagName("img").length > 0) {
+        var image = cell.getElementsByTagName("img")[0]; // Assumes only one image per cell
+        var src = image.src;
+        return(src);
+      }
+    }
+
+    function getImageAlt(cellId) {
+      var cell = document.getElementById(cellId);
+      
+      // Check if the cell exists and contains an image
+      if (cell && cell.getElementsByTagName("img").length > 0) {
+        var image = cell.getElementsByTagName("img")[0]; // Assumes only one image per cell
+        var alt = image.alt;
+        return(alt);
+      }
+    }
+
+    function getImageClass(cellId) {
+      var cell = document.getElementById(cellId);
+      
+      // Check if the cell exists and contains an image
+      if (cell && cell.getElementsByTagName("img").length > 0) {
+        var image = cell.getElementsByTagName("img")[0]; // Assumes only one image per cell
+        var clase = image.className;        
+        return(clase);
+      }
+    }
+
+    function getTdClass(cellId) {
+        var cell = document.getElementById(cellId);
+
+        // Check if the cell exists
+        if (cell) {
+            var tdClass = cell.className;
+            return tdClass;
+        }
+    }
+
+    var isRotated = false;
+
+    function rotateElements() {
+    var div = document.getElementById("myDiv");
+    
+    if (isRotated) {
+        div.style.transform = "none";
+        
+        var tds = div.getElementsByTagName("td");
+        for (var i = 0; i < tds.length; i++) {
+            tds[i].style.transform = "none";
+        }
+        
+        isRotated = false;
+    } else {
+        div.style.transform = "rotate(180deg)";
+        
+        var tds = div.getElementsByTagName("td");
+        for (var i = 0; i < tds.length; i++) {
+            tds[i].style.transform = "rotate(180deg)";
+        }
+        
+        isRotated = true;
+    }
+    }
+
+
+
+
+
+
+
+
+    /////////////
+
+
+    
+      // Function to copy an image to another table cell
+      function copyImage(imageId, actual) {
+      var image = document.getElementById(imageId);
+      var targetCell = document.getElementById(targetCellId);
+      
+      // Check if the image and target cell exist
+      if (image && targetCell) {
+        // Create a new image element
+        var newImage = document.createElement("img");
+        
+        // Set the properties of the new image
+        newImage.src = image.src;
+        newImage.alt = image.alt;
+        
+        // Append the new image to the target cell
+        targetCell.appendChild(newImage);
+      }
+    }
+   
+
+    
+</script>
+<head>    
+    <h1 class="titulo"> Tablero ajedrez</h1>
+</head>
+
+<body>
+    <p id="turno" class="desc">Turno: Blancas</p>
+    
+    <div id="myDiv">
+    <table id="tablero" class="tabla">    
+        <tr>
+            <td>8</td>
+            <td id="01" onclick="getCellPosition(event,id)" class="blanco"> <img class="piezaNegra" src="https://upload.wikimedia.org/wikipedia/commons/a/a0/Chess_rdt60.png" alt="torre">   </td>
+            <td id="02" onclick="getCellPosition(event,id)" class="negro">  <img class="piezaNegra" src="https://upload.wikimedia.org/wikipedia/commons/f/f1/Chess_ndt60.png" alt="caballo"> </td>
+            <td id="03" onclick="getCellPosition(event,id)" class="blanco"> <img class="piezaNegra" src="https://upload.wikimedia.org/wikipedia/commons/8/81/Chess_bdt60.png" alt="alfil">   </td>
+            <td id="04" onclick="getCellPosition(event,id)" class="negro">  <img class="piezaNegra" src="https://upload.wikimedia.org/wikipedia/commons/a/af/Chess_qdt60.png" alt="reina">   </td>
+            <td id="05" onclick="getCellPosition(event,id)" class="blanco"> <img class="piezaNegra" src="https://upload.wikimedia.org/wikipedia/commons/e/e3/Chess_kdt60.png" alt="rey">     </td>
+            <td id="06" onclick="getCellPosition(event,id)" class="negro">  <img class="piezaNegra" src="https://upload.wikimedia.org/wikipedia/commons/8/81/Chess_bdt60.png" alt="alfil">   </td>
+            <td id="07" onclick="getCellPosition(event,id)" class="blanco"> <img class="piezaNegra" src="https://upload.wikimedia.org/wikipedia/commons/f/f1/Chess_ndt60.png" alt="caballo"> </td>
+            <td id="08" onclick="getCellPosition(event,id)" class="negro">  <img class="piezaNegra" src="https://upload.wikimedia.org/wikipedia/commons/a/a0/Chess_rdt60.png" alt="torre">   </td>
+
+        </tr>
+        <tr>
+            <td>7</td>
+            <td id="11" onclick="getCellPosition(event,id)" class="negro">  <img class="piezaNegra" src="https://upload.wikimedia.org/wikipedia/commons/c/cd/Chess_pdt60.png" alt="peon"> </td>
+            <td id="12" onclick="getCellPosition(event,id)" class="blanco"> <img class="piezaNegra" src="https://upload.wikimedia.org/wikipedia/commons/c/cd/Chess_pdt60.png" alt="peon"> </td>
+            <td id="13" onclick="getCellPosition(event,id)" class="negro">  <img class="piezaNegra" src="https://upload.wikimedia.org/wikipedia/commons/c/cd/Chess_pdt60.png" alt="peon"> </td>
+            <td id="14" onclick="getCellPosition(event,id)" class="blanco"> <img class="piezaNegra" src="https://upload.wikimedia.org/wikipedia/commons/c/cd/Chess_pdt60.png" alt="peon"> </td>
+            <td id="15" onclick="getCellPosition(event,id)" class="negro">  <img class="piezaNegra" src="https://upload.wikimedia.org/wikipedia/commons/c/cd/Chess_pdt60.png" alt="peon"> </td>
+            <td id="16" onclick="getCellPosition(event,id)" class="blanco"> <img class="piezaNegra" src="https://upload.wikimedia.org/wikipedia/commons/c/cd/Chess_pdt60.png" alt="peon"> </td>
+            <td id="17" onclick="getCellPosition(event,id)" class="negro">  <img class="piezaNegra" src="https://upload.wikimedia.org/wikipedia/commons/c/cd/Chess_pdt60.png" alt="peon"> </td>
+            <td id="18" onclick="getCellPosition(event,id)" class="blanco"> <img class="piezaNegra" src="https://upload.wikimedia.org/wikipedia/commons/c/cd/Chess_pdt60.png" alt="peon"> </td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td id="21" onclick="getCellPosition(event,id)"class="blanco"> </td>
+            <td id="22" onclick="getCellPosition(event,id)"class="negro">  </td>
+            <td id="23" onclick="getCellPosition(event,id)"class="blanco"> </td>
+            <td id="24" onclick="getCellPosition(event,id)"class="negro">  </td>
+            <td id="25" onclick="getCellPosition(event,id)"class="blanco"> </td>
+            <td id="26" onclick="getCellPosition(event,id)"class="negro">  </td>
+            <td id="27" onclick="getCellPosition(event,id)"class="blanco"> </td>
+            <td id="28" onclick="getCellPosition(event,id)"class="negro">  </td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td id="31" onclick="getCellPosition(event,id)"class="negro">  </td>
+            <td id="32" onclick="getCellPosition(event,id)"class="blanco"> </td>
+            <td id="33" onclick="getCellPosition(event,id)"class="negro">  </td>
+            <td id="34" onclick="getCellPosition(event,id)"class="blanco"> </td>
+            <td id="35" onclick="getCellPosition(event,id)"class="negro">  </td>
+            <td id="36" onclick="getCellPosition(event,id)"class="blanco">  </td>
+            <td id="37" onclick="getCellPosition(event,id)"class="negro">  </td>
+            <td id="38" onclick="getCellPosition(event,id)"class="blanco"> </td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td id="41" onclick="getCellPosition(event,id)"class="blanco"> </td>
+            <td id="42" onclick="getCellPosition(event,id)"class="negro">  </td>
+            <td id="43" onclick="getCellPosition(event,id)"class="blanco"> </td>
+            <td id="44" onclick="getCellPosition(event,id)"class="negro">  </td>
+            <td id="45" onclick="getCellPosition(event,id)"class="blanco"> </td>
+            <td id="46" onclick="getCellPosition(event,id)"class="negro">  </td>
+            <td id="47" onclick="getCellPosition(event,id)"class="blanco"> </td>
+            <td id="48" onclick="getCellPosition(event,id)"class="negro">  </td>
+
+        </tr>
+        <tr>
+            <td>3</td>
+            <td id="51" onclick="getCellPosition(event,id)" class="negro">  </td>
+            <td id="52" onclick="getCellPosition(event,id)" class="blanco"> </td>
+            <td id="53" onclick="getCellPosition(event,id)" class="negro">  </td>
+            <td id="54" onclick="getCellPosition(event,id)" class="blanco"> </td>
+            <td id="55" onclick="getCellPosition(event,id)" class="negro">  </td>
+            <td id="56" onclick="getCellPosition(event,id)" class="blanco"> </td>
+            <td id="57" onclick="getCellPosition(event,id)" class="negro">  </td>
+            <td id="58" onclick="getCellPosition(event,id)" class="blanco"> </td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td id="61" onclick="getCellPosition(event,id)" class="blanco"> <img class="piezaBlanca" src="https://upload.wikimedia.org/wikipedia/commons/0/04/Chess_plt60.png" alt="peon"> </td>
+            <td id="62" onclick="getCellPosition(event,id)" class="negro">  <img class="piezaBlanca" src="https://upload.wikimedia.org/wikipedia/commons/0/04/Chess_plt60.png" alt="peon"> </td>
+            <td id="63" onclick="getCellPosition(event,id)" class="blanco"> <img class="piezaBlanca" src="https://upload.wikimedia.org/wikipedia/commons/0/04/Chess_plt60.png" alt="peon"> </td>
+            <td id="64" onclick="getCellPosition(event,id)" class="negro">  <img class="piezaBlanca" src="https://upload.wikimedia.org/wikipedia/commons/0/04/Chess_plt60.png" alt="peon"> </td>
+            <td id="65" onclick="getCellPosition(event,id)" class="blanco"> <img class="piezaBlanca" src="https://upload.wikimedia.org/wikipedia/commons/0/04/Chess_plt60.png" alt="peon"> </td>
+            <td id="66" onclick="getCellPosition(event,id)" class="negro">  <img class="piezaBlanca" src="https://upload.wikimedia.org/wikipedia/commons/0/04/Chess_plt60.png" alt="peon"> </td>
+            <td id="67" onclick="getCellPosition(event,id)" class="blanco"> <img class="piezaBlanca" src="https://upload.wikimedia.org/wikipedia/commons/0/04/Chess_plt60.png" alt="peon"> </td>
+            <td id="68" onclick="getCellPosition(event,id)" class="negro">  <img class="piezaBlanca" src="https://upload.wikimedia.org/wikipedia/commons/0/04/Chess_plt60.png" alt="peon"> </td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td id="71" onclick="getCellPosition(event,id)" class="negro">  <img class="piezaBlanca" src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Chess_rlt60.png" alt="torre">   </td>
+            <td id="72" onclick="getCellPosition(event,id)" class="blanco"> <img class="piezaBlanca" src="https://upload.wikimedia.org/wikipedia/commons/2/28/Chess_nlt60.png" alt="caballo"> </td>
+            <td id="73" onclick="getCellPosition(event,id)" class="negro">  <img class="piezaBlanca" src="https://upload.wikimedia.org/wikipedia/commons/9/9b/Chess_blt60.png" alt="alfil">   </td>
+            <td id="74" onclick="getCellPosition(event,id)" class="blanco"> <img class="piezaBlanca" src="https://upload.wikimedia.org/wikipedia/commons/4/49/Chess_qlt60.png" alt="reina">   </td>
+            <td id="75" onclick="getCellPosition(event,id)" class="negro">  <img class="piezaBlanca" src="https://upload.wikimedia.org/wikipedia/commons/3/3b/Chess_klt60.png" alt="rey">     </td>
+            <td id="76" onclick="getCellPosition(event,id)" class="blanco"> <img class="piezaBlanca" src="https://upload.wikimedia.org/wikipedia/commons/9/9b/Chess_blt60.png" alt="alfil">   </td>
+            <td id="77" onclick="getCellPosition(event,id)" class="negro">  <img class="piezaBlanca" src="https://upload.wikimedia.org/wikipedia/commons/2/28/Chess_nlt60.png" alt="caballo"> </td>
+            <td id="78" onclick="getCellPosition(event,id)" class="blanco"> <img class="piezaBlanca" src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Chess_rlt60.png" alt="torre">   </td>
+        </tr>
+        <tr class="center">
+            <td> </td>
+            <td>a </td>
+            <td>b </td>
+            <td>c </td>
+            <td>d </td>
+            <td>e </td>
+            <td>f </td>
+            <td>g </td>
+            <td>h </td>
+            </tr>
+    </tr>
+</table>
+</div>
+
+
+</body>
+
+</html>
