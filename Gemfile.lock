@@ -12,9 +12,8 @@ GEM
       ffi (>= 1.15.0)
     eventmachine (1.2.7)
     eventmachine (1.2.7-x64-mingw32)
+    eventmachine (1.2.7-x86-mingw32)
     ffi (1.15.5)
-    ffi (1.15.5-x64-mingw32)
-    ffi (1.15.5-x64-unknown)
     forwardable-extended (2.6.0)
     html-proofer (3.19.4)
       addressable (~> 2.3)
@@ -108,6 +107,7 @@ GEM
 PLATFORMS
   x64-mingw32
   x64-unknown
+  x86-mingw32
   x86_64-linux
 
 DEPENDENCIES
