@@ -1,0 +1,100 @@
+I"�<p><img src="https://www.kali.org/tools/hydra/images/hydra-logo.svg" alt="img-description" /></p>
+
+<p><em>Link: https://www.kali.org/tools/hydra/</em></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="nb">sudo </span>apt <span class="nb">install </span>hydra
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h1 id="options">options</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Section</th>
+      <th>Function</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>-t 4</td>
+      <td>Number of parallel connections per target</td>
+    </tr>
+    <tr>
+      <td>-l [user]</td>
+      <td>Points to the user who’s account you’re trying to compromise</td>
+    </tr>
+    <tr>
+      <td>P [path to dictionary]</td>
+      <td>Points to the file containing the list of possible passwords</td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="examples">examples</h1>
+
+<h2 id="ftp">ftp</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>hydra <span class="nt">-t</span> 4 <span class="nt">-l</span> dale <span class="nt">-P</span> /usr/share/wordlists/rockyou.txt <span class="nt">-vV</span> 10.10.10.6 ftp
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="web-login">web login</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>hydra <span class="nt">-l</span> &lt;USER&gt; <span class="nt">-p</span> &lt;Password&gt; &lt;IP Address&gt; http-post-form “&lt;Login Page&gt;:&lt;Request Body&gt;:&lt;Error Message&gt;”
+</pre></td></tr></tbody></table></code></pre></div></div>
+<h2 id="ssh">ssh</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>hydra <span class="nt">-l</span> user <span class="nt">-P</span> passlist ip <span class="nt">-t</span> 64 ssh
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h1 id="set-up-the-command-for-web-login">set up the command for web login</h1>
+
+<p><img src="https://infiniteloginscom.files.wordpress.com/2020/02/image-42.png?w=1013" alt="img-description" /></p>
+
+<h2 id="command-build">command build</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="rouge-code"><pre>With all the information that we have collected now let’s build the hydra command.
+Change the &lt;Login page&gt; this value has to start with “/” backspace.
+Change &lt;Request body&gt; with the format from the page. We do need to modify the username and password. Replace the failed username with ^USER^ and the failed password with ^PASS^. This change will allow hydra to substitute the values.
+Change the &lt;Error Message&gt; with the failed login error message.
+Change the &lt;IP Address&gt; with either an IP address or hostname.
+Change the &lt;User&gt; with either username or username list.
+Change the &lt;Password&gt; with either a password or password list.
+Layout of command: hydra -L &lt;USER&gt; -P &lt;Password&gt; &lt;IP Address&gt; http-post-form “&lt;Login Page&gt;:&lt;Request Body&gt;:&lt;Error Message&gt;”
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<table>
+<colgroup>
+<col width="30%" />
+<col width="70%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>First column <strong>fields</strong></td>
+<td>Some descriptive text. This is a markdown link to <a href="http://google.com">Google</a>. Or see [some link][mydoc_tags].</td>
+</tr>
+<tr>
+<td>Second column <strong>fields</strong></td>
+<td>Some more descriptive text.
+</td>
+</tr>
+</tbody>
+</table>
+
+<p><span class="label label-default">Default</span></p>
+
+:ET
