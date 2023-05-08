@@ -1,0 +1,52 @@
+I"<p><img src="https://miro.medium.com/max/646/1*C1mR63PVkKjyH1lcdOeziw.png" alt="" /></p>
+
+<h2 id="modes">modes</h2>
+
+<p>Gobuster currently have 7 scanning modes</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>mode</th>
+      <th>explanation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>dir</td>
+      <td>Uses directory/file enumeration mode</td>
+    </tr>
+    <tr>
+      <td>dns</td>
+      <td>Uses DNS subdomain enumeration mode</td>
+    </tr>
+    <tr>
+      <td>fuzz</td>
+      <td>Uses fuzzing mode</td>
+    </tr>
+    <tr>
+      <td>help</td>
+      <td>Help about any command</td>
+    </tr>
+    <tr>
+      <td>s3</td>
+      <td>Uses aws bucket enumeration mode</td>
+    </tr>
+    <tr>
+      <td>version</td>
+      <td>shows the current version</td>
+    </tr>
+    <tr>
+      <td>vhost</td>
+      <td>Uses VHOST enumeration mode</td>
+    </tr>
+  </tbody>
+</table>
+
+<dl>
+  <dt>dir</dt>
+  <dd>This mode will enumarate different directories and files of a website bruteforcing with a dictionary you previously asigned</dd>
+  <dd>e.g : <code class="language-plaintext highlighter-rouge">gobuster dir -u http://&lt;ip&gt;:3333 -w &lt;word list location&gt;</code> will output something like this: <img src="https://www.secjuice.com/content/images/2020/10/image-22.png" alt="" /></dd>
+</dl>
+
+:ET
