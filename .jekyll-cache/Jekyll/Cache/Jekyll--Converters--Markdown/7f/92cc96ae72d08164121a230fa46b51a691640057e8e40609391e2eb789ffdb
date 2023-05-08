@@ -1,0 +1,239 @@
+I"�<p><img src="https://miro.medium.com/max/646/1*C1mR63PVkKjyH1lcdOeziw.png" alt="" /></p>
+
+<h2 id="modes">modes</h2>
+
+<p>Gobuster currently have 7 scanning modes</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>mode</th>
+      <th>explanation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>dir</td>
+      <td>Uses directory/file enumeration mode</td>
+    </tr>
+    <tr>
+      <td>dns</td>
+      <td>Uses DNS subdomain enumeration mode</td>
+    </tr>
+    <tr>
+      <td>fuzz</td>
+      <td>Uses fuzzing mode</td>
+    </tr>
+    <tr>
+      <td>help</td>
+      <td>Help about any command</td>
+    </tr>
+    <tr>
+      <td>s3</td>
+      <td>Uses aws bucket enumeration mode</td>
+    </tr>
+    <tr>
+      <td>version</td>
+      <td>shows the current version</td>
+    </tr>
+    <tr>
+      <td>vhost</td>
+      <td>Uses VHOST enumeration mode</td>
+    </tr>
+  </tbody>
+</table>
+
+<dl>
+  <dt>dir</dt>
+  <dd>This mode will enumarate different directories and files of a website bruteforcing with a dictionary you previously asigned</dd>
+  <dd>e.g : <code class="language-plaintext highlighter-rouge">gobuster dir -u http://&lt;ip&gt;:3333 -w &lt;word list location&gt;</code> will output something like this: <img src="https://www.secjuice.com/content/images/2020/10/image-22.png" alt="" /></dd>
+  <dd>where /css, /fonts, etc. are directories. And files as /index.html</dd>
+  <dt>dns</dt>
+  <dd>text sample</dd>
+  <dt>fuzz</dt>
+  <dd>tex example</dd>
+  <dt>s3</dt>
+  <dd>tex example</dd>
+  <dt>version</dt>
+  <dd>tex example</dd>
+  <dt>vhost</dt>
+  <dd>tex example</dd>
+  <dt>help</dt>
+  <dd>tex example</dd>
+  <dd><code class="language-plaintext highlighter-rouge">gobuster help &lt;mode&gt;</code></dd>
+</dl>
+
+<h2 id="flags">flags</h2>
+
+<h3 id="global-flags">global flags</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>a</th>
+      <th>ab</th>
+      <th>abc</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td> </td>
+      <td>–delay duration</td>
+      <td>Time each thread waits between requests (e.g. 1500ms)</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>–no-error</td>
+      <td>Don’t display errors</td>
+    </tr>
+    <tr>
+      <td>-z</td>
+      <td>–no-progress</td>
+      <td>Don’t display progress</td>
+    </tr>
+    <tr>
+      <td>-o</td>
+      <td>–output string</td>
+      <td>Output file to write results to (defaults to stdout)</td>
+    </tr>
+    <tr>
+      <td>-p</td>
+      <td>–pattern string</td>
+      <td>File containing replacement patterns</td>
+    </tr>
+    <tr>
+      <td>-q</td>
+      <td>–quiet</td>
+      <td>Don’t print the banner and other noise</td>
+    </tr>
+    <tr>
+      <td>-t</td>
+      <td>–threads int</td>
+      <td>Number of concurrent threads (default 10)</td>
+    </tr>
+    <tr>
+      <td>-v</td>
+      <td>–verbose</td>
+      <td>Verbose output (errors)</td>
+    </tr>
+    <tr>
+      <td>-w</td>
+      <td>–wordlist string</td>
+      <td>Path to the wordlist</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="dns-flags">dns flags</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td> --><td class="rouge-code"><pre>Usage:
+  gobuster dns [flags]
+
+Flags:
+  -d, --domain string      The target domain
+  -h, --help               help for dns
+  -r, --resolver string    Use custom DNS server (format server.com or server.com:port)
+  -c, --show-cname         Show CNAME records (cannot be used with '-i' option)
+  -i, --show-ips           Show IP addresses
+      --timeout duration   DNS resolver timeout (default 1s)
+      --wildcard           Force continued operation when wildcard found
+
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="dir-flags">dir flags</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+</pre></td> --><td class="rouge-code"><pre>Usage:
+  gobuster dir [flags]
+
+Flags:
+  -f, --add-slash                     Append / to each request
+  -c, --cookies string                Cookies to use for the requests
+  -e, --expanded                      Expanded mode, print full URLs
+  -x, --extensions string             File extension(s) to search for
+  -r, --follow-redirect               Follow redirects
+  -H, --headers stringArray           Specify HTTP headers, -H 'Header1: val1' -H 'Header2: val2'
+  -h, --help                          help for dir
+  -l, --include-length                Include the length of the body in the output
+  -k, --no-tls-validation             Skip TLS certificate verification
+  -n, --no-status                     Don't print status codes
+  -P, --password string               Password for Basic Auth
+  -p, --proxy string                  Proxy to use for requests [http(s)://host:port]
+  -s, --status-codes string           Positive status codes (will be overwritten with status-codes-blacklist if set) (default "200,204,301,302,307,401,403")
+  -b, --status-codes-blacklist string Negative status codes (will override status-codes if set)
+      --timeout duration              HTTP Timeout (default 10s)
+  -u, --url string                    The target URL
+  -a, --useragent string              Set the User-Agent string (default "gobuster/3.1.0")
+  -U, --username string               Username for Basic Auth
+  -d, --discover-backup               Upon finding a file search for backup files
+      --wildcard                      Force continued operation when wildcard found
+
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="vhost-flags">vhost flags</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><!-- <td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</pre></td> --><td class="rouge-code"><pre>  Usage:
+  gobuster vhost [flags]
+
+Flags:
+  -c, --cookies string        Cookies to use for the requests
+  -r, --follow-redirect       Follow redirects
+  -H, --headers stringArray   Specify HTTP headers, -H 'Header1: val1' -H 'Header2: val2'
+  -h, --help                  help for vhost
+  -k, --no-tls-validation     Skip TLS certificate verification
+  -P, --password string       Password for Basic Auth
+  -p, --proxy string          Proxy to use for requests [http(s)://host:port]
+      --timeout duration      HTTP Timeout (default 10s)
+  -u, --url string            The target URL
+  -a, --useragent string      Set the User-Agent string (default "gobuster/3.1.0")
+  -U, --username string       Username for Basic Auth
+</pre></td></tr></tbody></table></code></pre></div></div>
+:ET
