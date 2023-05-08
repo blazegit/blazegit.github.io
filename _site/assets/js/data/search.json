@@ -1,0 +1,124 @@
+[
+  
+  {
+    "title": "Linuxfund",
+    "url": "/posts/linuxfund/",
+    "categories": "",
+    "tags": "",
+    "date": "2022-09-11 00:00:00 -0300",
+    
+
+
+
+
+
+    "snippet": ""
+  },
+  
+  {
+    "title": "Hashes",
+    "url": "/posts/hashes/",
+    "categories": "",
+    "tags": "",
+    "date": "2022-09-11 00:00:00 -0300",
+    
+
+
+
+
+
+    "snippet": ""
+  },
+  
+  {
+    "title": "Mr. Robot",
+    "url": "/posts/mrrobot/",
+    "categories": "CTF, Medium",
+    "tags": "ctf",
+    "date": "2022-09-10 09:00:00 -0300",
+    
+
+
+
+
+
+    "snippet": "information gatheringwe’ll start with a quick nmap scan with the following parameters:  -p-   : scan all ports 1 - 65,535  -open : display only open ports  -n    : don’t resolve DNS  -T4   : the speed of the scan (-T1 / -T5 fastest, but less reliable)nmap -p- -open -vvv -n -T4 `machine IP`output:PORT    STATE SERVICE REASON80/tcp  open  http    syn-ack ttl 63443/tcp open  https   syn-ack ttl 63now with this ports we can execute a more extensive scan on them to know morenmap -sCV -p80,443 -v -n `machine IP`  -sCV :output80/tcp  open  http     Apache httpd443/tcp open  ssl/http Apache httpdso it looks like theyre both running a webpageafter going through all optionslooks like a dead end, lets try enumarating the site with gobustergobuster dir -u `machine IP` -w /usr/share/wordlists/dirb/common.txt -t 100  xd/.htpasswd            (Status: 403) [Size: 218]/.hta                 (Status: 403) [Size: 213]/.htaccess            (Status: 403) [Size: 218]/0                    (Status: 301) [Size: 0] [--&gt; http://10.10.118.124/0/]/admin                (Status: 301) [Size: 235] [--&gt; http://10.10.118.124/admin/]/audio                (Status: 301) [Size: 235] [--&gt; http://10.10.118.124/audio/]/atom                 (Status: 301) [Size: 0] [--&gt; http://10.10.118.124/feed/atom/]/blog                 (Status: 301) [Size: 234] [--&gt; http://10.10.118.124/blog/]   /css                  (Status: 301) [Size: 233] [--&gt; http://10.10.118.124/css/]    /dashboard            (Status: 302) [Size: 0] [--&gt; http://10.10.118.124/wp-admin/] /favicon.ico          (Status: 200) [Size: 0]                                      /feed                 (Status: 301) [Size: 0] [--&gt; http://10.10.118.124/feed/]     /images               (Status: 301) [Size: 236] [--&gt; http://10.10.118.124/images/] /index.html           (Status: 200) [Size: 1188]                                   /image                (Status: 301) [Size: 0] [--&gt; http://10.10.118.124/image/]    /Image                (Status: 301) [Size: 0] [--&gt; http://10.10.118.124/Image/]    /index.php            (Status: 301) [Size: 0] [--&gt; http://10.10.118.124/]          /intro                (Status: 200) [Size: 516314]                                 /js                   (Status: 301) [Size: 232] [--&gt; http://10.10.118.124/js/]     /license              (Status: 200) [Size: 309]                                    /login                (Status: 302) [Size: 0] [--&gt; http://10.10.118.124/wp-login.php]/page1                (Status: 301) [Size: 0] [--&gt; http://10.10.118.124/]            /phpmyadmin           (Status: 403) [Size: 94]                                       /readme               (Status: 200) [Size: 64]                                       /rdf                  (Status: 301) [Size: 0] [--&gt; http://10.10.118.124/feed/rdf/]   /robots               (Status: 200) [Size: 41]                                       /robots.txt           (Status: 200) [Size: 41]                                       /rss                  (Status: 301) [Size: 0] [--&gt; http://10.10.118.124/feed/]       /rss2                 (Status: 301) [Size: 0] [--&gt; http://10.10.118.124/feed/]       /sitemap              (Status: 200) [Size: 0]                                        /sitemap.xml          (Status: 200) [Size: 0]                                        /video                (Status: 301) [Size: 235] [--&gt; http://10.10.118.124/video/]    /wp-admin             (Status: 301) [Size: 238] [--&gt; http://10.10.118.124/wp-admin/] /wp-content           (Status: 301) [Size: 240] [--&gt; http://10.10.118.124/wp-content/]/wp-includes          (Status: 301) [Size: 241] [--&gt; http://10.10.118.124/wp-includes/]/wp-config            (Status: 200) [Size: 0]                                          /wp-cron              (Status: 200) [Size: 0]                                          /wp-links-opml        (Status: 200) [Size: 227]                                        /wp-load              (Status: 200) [Size: 0]                                          /wp-login             (Status: 200) [Size: 2613]                                       /wp-settings          (Status: 500) [Size: 0]                                          /wp-mail              (Status: 500) [Size: 3064]                                       /wp-signup            (Status: 302) [Size: 0] [--&gt; http://10.10.118.124/wp-login.php?action=register]/xmlrpc               (Status: 405) [Size: 42]                                                       /xmlrpc.php           (Status: 405) [Size: 42]scan throws a lot of directories/robots looks interesting, in there usually is the directories that you don’t want people to find in the internet, that’s why it should be protectedUser-agent: *fsocity.dickey-1-of-3.txtgoing into machine ip/key-1-of-3.txt we can get the first keyand going to machine ip/fsocity.dic downloads a dictionary, probably for a future brute force"
+  },
+  
+  {
+    "title": "Gobuster",
+    "url": "/posts/gobuster/",
+    "categories": "Scanning",
+    "tags": "app, bruteforce",
+    "date": "2022-09-10 09:00:00 -0300",
+    
+
+
+
+
+
+    "snippet": "modesGobuster currently have 7 scanning modes            mode      explanation                  dir      Uses directory/file enumeration mode              dns      Uses DNS subdomain enumeration mode              fuzz      Uses fuzzing mode              help      Help about any command              s3      Uses aws bucket enumeration mode              version      shows the current version              vhost      Uses VHOST enumeration mode        dir  This mode will enumarate different directories and files of a website bruteforcing with a dictionary you previously asigned  e.g : gobuster dir -u http://&lt;ip&gt;:3333 -w &lt;word list location&gt; will output something like this:   where /css, /fonts, etc. are directories. And files as /index.html  dns  text sample  fuzz  tex example  s3  tex example  version  tex example  vhost  tex example  help  tex example  gobuster help &lt;mode&gt;flagsglobal flags            a      ab      abc                         –delay duration      Time each thread waits between requests (e.g. 1500ms)                     –no-error      Don’t display errors              -z      –no-progress      Don’t display progress              -o      –output string      Output file to write results to (defaults to stdout)              -p      –pattern string      File containing replacement patterns              -q      –quiet      Don’t print the banner and other noise              -t      –threads int      Number of concurrent threads (default 10)              -v      –verbose      Verbose output (errors)              -w      –wordlist string      Path to the wordlist      dns flagsUsage:  gobuster dns [flags]Flags:  -d, --domain string      The target domain  -h, --help               help for dns  -r, --resolver string    Use custom DNS server (format server.com or server.com:port)  -c, --show-cname         Show CNAME records (cannot be used with '-i' option)  -i, --show-ips           Show IP addresses      --timeout duration   DNS resolver timeout (default 1s)      --wildcard           Force continued operation when wildcard founddir flagsUsage:  gobuster dir [flags]Flags:  -f, --add-slash                     Append / to each request  -c, --cookies string                Cookies to use for the requests  -e, --expanded                      Expanded mode, print full URLs  -x, --extensions string             File extension(s) to search for  -r, --follow-redirect               Follow redirects  -H, --headers stringArray           Specify HTTP headers, -H 'Header1: val1' -H 'Header2: val2'  -h, --help                          help for dir  -l, --include-length                Include the length of the body in the output  -k, --no-tls-validation             Skip TLS certificate verification  -n, --no-status                     Don't print status codes  -P, --password string               Password for Basic Auth  -p, --proxy string                  Proxy to use for requests [http(s)://host:port]  -s, --status-codes string           Positive status codes (will be overwritten with status-codes-blacklist if set) (default \"200,204,301,302,307,401,403\")  -b, --status-codes-blacklist string Negative status codes (will override status-codes if set)      --timeout duration              HTTP Timeout (default 10s)  -u, --url string                    The target URL  -a, --useragent string              Set the User-Agent string (default \"gobuster/3.1.0\")  -U, --username string               Username for Basic Auth  -d, --discover-backup               Upon finding a file search for backup files      --wildcard                      Force continued operation when wildcard foundvhost flags  Usage:  gobuster vhost [flags]Flags:  -c, --cookies string        Cookies to use for the requests  -r, --follow-redirect       Follow redirects  -H, --headers stringArray   Specify HTTP headers, -H 'Header1: val1' -H 'Header2: val2'  -h, --help                  help for vhost  -k, --no-tls-validation     Skip TLS certificate verification  -P, --password string       Password for Basic Auth  -p, --proxy string          Proxy to use for requests [http(s)://host:port]      --timeout duration      HTTP Timeout (default 10s)  -u, --url string            The target URL  -a, --useragent string      Set the User-Agent string (default \"gobuster/3.1.0\")  -U, --username string       Username for Basic Authhttps://github.com/OJ/gobuster"
+  },
+  
+  {
+    "title": "Hydra",
+    "url": "/posts/hydra/",
+    "categories": "Gaining Access",
+    "tags": "kaliapp, bruteforce",
+    "date": "2022-09-10 09:00:00 -0300",
+    
+
+
+
+
+
+    "snippet": "Link: https://www.kali.org/tools/hydra/sudo apt install hydraoptions            Section      Function                  -t 4      Number of parallel connections per target              -l [user]      Points to the user who’s account you’re trying to compromise              P [path to dictionary]      Points to the file containing the list of possible passwords      examplesftphydra -t 4 -l dale -P /usr/share/wordlists/rockyou.txt -vV 10.10.10.6 ftpweb loginhydra -l &lt;USER&gt; -p &lt;Password&gt; &lt;IP Address&gt; http-post-form “&lt;Login Page&gt;:&lt;Request Body&gt;:&lt;Error Message&gt;”sshhydra -l user -P passlist ip -t 64 sshset up the command for web logincommand buildWith all the information that we have collected now let’s build the hydra command.Change the &lt;Login page&gt; this value has to start with “/” backspace.Change &lt;Request body&gt; with the format from the page. We do need to modify the username and password. Replace the failed username with ^USER^ and the failed password with ^PASS^. This change will allow hydra to substitute the values.Change the &lt;Error Message&gt; with the failed login error message.Change the &lt;IP Address&gt; with either an IP address or hostname.Change the &lt;User&gt; with either username or username list.Change the &lt;Password&gt; with either a password or password list.Layout of command: hydra -L &lt;USER&gt; -P &lt;Password&gt; &lt;IP Address&gt; http-post-form “&lt;Login Page&gt;:&lt;Request Body&gt;:&lt;Error Message&gt;”FieldDescriptionFirst column fieldsSome descriptive text. This is a markdown link to Google. Or see [some link][mydoc_tags].Second column fieldsSome more descriptive text.Default"
+  },
+  
+  {
+    "title": "TITLE",
+    "url": "/posts/hola/",
+    "categories": "TOP_CATEGORIE, SUB_CATEGORIE",
+    "tags": "TAG",
+    "date": "2022-09-10 09:00:00 -0300",
+    
+
+
+
+
+
+    "snippet": "holaxddddddddddddddxddselect * from table1mamaking  1  2  3 dfsdf_my photosudo apt update &amp;&amp; sudo apt upgradereferencia pagina externahola hola lol xdreferencia pagina internaHydratables            Priority apples      Second priority      Third priority                  ambrosia      gala      red delicious              pink lady      jazz      macintosh              honeycrisp      granny smith      fuji      lol/path/to/a/file.extendecho 'No more line numbers!'echo 'No more line numbers!'echo 'No more line numbers!'echo 'No more line numbers!'{% if product.title contains 'Pack' %}  This product's title contains the word Pack.{% endif %}"
+  },
+  
+  {
+    "title": "TITLE",
+    "url": "/posts/hola/",
+    "categories": "TOP_CATEGORIE, SUB_CATEGORIE",
+    "tags": "TAG",
+    "date": "2021-09-10 09:00:00 -0300",
+    
+
+
+
+
+
+    "snippet": "holaxddddddddddddddxddselect * from table1mamaking  1  2  3 dfsdf_my photosudo apt update &amp;&amp; sudo apt upgrade"
+  },
+  
+  {
+    "title": "Text and Typography",
+    "url": "/posts/typography/",
+    "categories": "Blogging, Demo",
+    "tags": "typography",
+    "date": "2019-08-07 23:33:00 -0400",
+    
+
+
+
+
+
+    "snippet": "This post is to show Markdown syntax rendering on Chirpy, you can also use it as an example of writing. Now, let’s start looking at text and typography.TitlesH1 - headingH2 - headingH3 - headingH4 - headingParagraphI wandered lonely as a cloudThat floats on high o’er vales and hills,When all at once I saw a crowd,A host, of golden daffodils;Beside the lake, beneath the trees,Fluttering and dancing in the breeze.ListsOrdered list  Firstly  Secondly  ThirdlyUnordered list  Chapter          Section                  Paragraph                    Task list  TODO  Completed  Defeat COVID-19          Vaccine production      Economic recovery      People smile again      Description list  Sun  the star around which the earth orbits  Moon  the natural satellite of the earth, visible by reflected light from the sunBlock Quote  This line shows the block quote.Prompts  An example showing the tip type prompt.  An example showing the info type prompt.  An example showing the warning type prompt.  An example showing the danger type prompt.Tables            Company      Contact      Country                  Alfreds Futterkiste      Maria Anders      Germany              Island Trading      Helen Bennett      UK              Magazzini Alimentari Riuniti      Giovanni Rovelli      Italy      Linkshttp://127.0.0.1:4000FootnoteClick the hook will locate the footnote1, and here is another footnote2.Images  Default (with caption)Full screen width and center alignment  Shadowshadow effect (visible in light mode)  Left aligned      Float to left    “A repetitive and meaningless text is used to fill the space. A repetitive and meaningless text is used to fill the space. A repetitive and meaningless text is used to fill the space. A repetitive and meaningless text is used to fill the space. A repetitive and meaningless text is used to fill the space. A repetitive and meaningless text is used to fill the space. A repetitive and meaningless text is used to fill the space. A repetitive and meaningless text is used to fill the space. A repetitive and meaningless text is used to fill the space. A repetitive and meaningless text is used to fill the space. A repetitive and meaningless text is used to fill the space. A repetitive and meaningless text is used to fill the space.”        Float to right    “A repetitive and meaningless text is used to fill the space. A repetitive and meaningless text is used to fill the space. A repetitive and meaningless text is used to fill the space. A repetitive and meaningless text is used to fill the space. A repetitive and meaningless text is used to fill the space. A repetitive and meaningless text is used to fill the space. A repetitive and meaningless text is used to fill the space. A repetitive and meaningless text is used to fill the space. A repetitive and meaningless text is used to fill the space. A repetitive and meaningless text is used to fill the space. A repetitive and meaningless text is used to fill the space. A repetitive and meaningless text is used to fill the space.”  Mermaid SVG gantt  title  Adding GANTT diagram functionality to mermaid  apple :a, 2017-07-20, 1w  banana :crit, b, 2017-07-23, 1d  cherry :active, c, after b a, 1dMathematicsThe mathematics powered by MathJax:\\[\\sum_{n=1}^\\infty 1/n^2 = \\frac{\\pi^2}{6}\\]When $a \\ne 0$, there are two solutions to $ax^2 + bx + c = 0$ and they are\\[x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}\\]Inline codeThis is an example of Inline Code.FilepathHere is the /path/to/the/file.extend.Code blockCommonThis is a common code snippet, without syntax highlight and line number.Specific LanguagesConsole$ env |grep SHELLSHELL=/usr/local/bin/bashPYENV_SHELL=bashShellif [ $? -ne 0 ]; then    echo \"The command was not successful.\";    #do the needful / exitfi;Specific filename@import  \"colors/light-typography\",  \"colors/dark-typography\"Reverse Footnote            The footnote source &#8617;              The 2nd footnote source &#8617;      "
+  }
+  
+]
+
