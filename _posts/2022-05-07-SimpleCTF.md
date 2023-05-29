@@ -25,7 +25,7 @@ PORT     STATE SERVICE
 
 ### What is running on the higher port?
 
-We don't know what service is running on port 2222 so let's see what is it, and, incidentally, the other ports.
+We don't know which service is running on port 2222, so let's find out what it is and check the other ports while we're at it.
 
 ```terminal
 PORT     STATE SERVICE VERSION
