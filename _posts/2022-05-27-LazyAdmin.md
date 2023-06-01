@@ -5,7 +5,6 @@ categories: [THM, easy machines]
 tags: []    # TAG names should always be lowercase
 ---
 
-10.10.74.238
 
 ### What is the user flag?
 

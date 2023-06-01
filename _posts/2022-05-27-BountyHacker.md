@@ -5,7 +5,7 @@ categories: [THM, easy machines]
 tags: []    # TAG names should always be lowercase
 ---
 
-10.10.101.89
+
 
 ### Find open ports on the machine
 
