@@ -265,6 +265,8 @@ sudo -l
 my first thought after seeing this was Im ready is just 'sudo /bin/bash', but it said we are not allowed.
 since the answer was about a CVE I search on Google and I found the exploit on exploit-db and the CVE.
 
+(more on this vulnerability on https://tryhackme.com/room/sudovulnsbypass)
+
 >
 
 ### What is the root flag?
