@@ -1,0 +1,941 @@
+
+<!-- -draggable menu
+-cookie volume 
+-when started stop previous sound, to hear the other notes, and the next to guess clearly
+-highscore
+-->
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Piano</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+  </head>
+    <style lang="text/less">
+       @keyframes piano {
+  0% {
+    transform: none;
+  }
+  100% {
+    transform: rotateX(50deg);
+  }
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+body {
+  transform: scale(0.9);
+  font-size: 15px;
+  margin: 0;
+  height: 75%;
+  display: flex;
+  flex-direction: column;
+  animation: fadeIn 0.6s 0.8s ease;
+  animation-fill-mode: backwards;
+    background-color: #edefee;
+}
+body div {
+  display: flex;
+  perspective: 2000px;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+a {
+  color: skyblue;
+}
+.piano {
+  margin-top: -150px;
+  height: 500px;
+  display: flex;
+  flex-direction: row;
+  transform-origin: bottom;
+  transform-style: preserve-3d;
+  transform: rotateX(50deg);
+  animation: piano 0.6s 0.8s ease;
+  animation-fill-mode: backwards;
+  transition: transform 0.3s ease;
+}
+.piano::before,
+.piano::after {
+  content: '';
+  position: absolute;
+  background: #3c3c3c;
+  background-clip: content-box;
+  top: 0;
+  left: 6px;
+  right: 6px;
+  bottom: 0;
+  transform: translateZ(-76px);
+  box-shadow: 0 0 40px rgba(68, 68, 68, 0.4), 0 0 0 100px #edefee;
+}
+.piano::after {
+  left: 25px;
+  right: 25px;
+  bottom: auto;
+  height: 79px;
+  transform-origin: top;
+  transform: rotateX(-90deg);
+}
+.piano.left {
+  transform: rotateX(50deg) rotateZ(10deg);
+}
+.piano.right {
+  transform: rotateX(50deg) rotateZ(-10deg);
+}
+.piano.top {
+  transform: rotateX(60deg) rotateY(10deg);
+}
+.piano.bottom {
+  transform: rotateX(40deg) rotateY(-10deg);
+}
+.piano .key-1,
+.piano .key-3,
+.piano .key-5,
+.piano .key-6,
+.piano .key-8,
+.piano .key-10,
+.piano .key-12 {
+  position: relative;
+  width: 76px;
+  height: 500px;
+  padding: 0;
+  border: none;
+  border-top: 252px solid transparent;
+  box-sizing: border-box;
+  background-color: #edefee;
+  background-clip: content-box;
+  margin: 0 2px;
+  outline: none;
+  transform-origin: top;
+  transform-style: preserve-3d;
+  box-shadow: inset 2px 0 2px -1px rgba(255, 255, 255, 0.8), inset -2px 0 2px -1px rgba(255, 255, 255, 0.8), inset 10px -10px 10px -10px rgba(68, 68, 68, 0.3), inset -10px 0 10px -10px rgba(68, 68, 68, 0.3), inset 0 -200px 200px -200px rgba(255, 255, 255, 0.7), inset 0 0 0 1000px rgba(237, 239, 238, 0.5);
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+.piano .key-1:active,
+.piano .key-3:active,
+.piano .key-5:active,
+.piano .key-6:active,
+.piano .key-8:active,
+.piano .key-10:active,
+.piano .key-12:active {
+  transform: rotateX(-7deg);
+}
+.piano .key-1:hover,
+.piano .key-3:hover,
+.piano .key-5:hover,
+.piano .key-6:hover,
+.piano .key-8:hover,
+.piano .key-10:hover,
+.piano .key-12:hover {
+  background-color: white;
+}
+.piano .key-1:hover::before,
+.piano .key-3:hover::before,
+.piano .key-5:hover::before,
+.piano .key-6:hover::before,
+.piano .key-8:hover::before,
+.piano .key-10:hover::before,
+.piano .key-12:hover::before {
+  background: white;
+}
+.piano .key-1::before,
+.piano .key-3::before,
+.piano .key-5::before,
+.piano .key-6::before,
+.piano .key-8::before,
+.piano .key-10::before,
+.piano .key-12::before,
+.piano .key-1::after,
+.piano .key-3::after,
+.piano .key-5::after,
+.piano .key-6::after,
+.piano .key-8::after,
+.piano .key-10::after,
+.piano .key-12::after {
+  content: '';
+  background: #edefee;
+  position: absolute;
+  height: 252px;
+  top: -250px;
+  left: 0;
+  box-shadow: inset 0 200px 200px -200px rgba(68, 68, 68, 0.3), inset 10px 10px 10px -10px rgba(68, 68, 68, 0.3), inset -10px 0 10px -10px rgba(68, 68, 68, 0.3), inset 0 0 0 1000px rgba(237, 239, 238, 0.5);
+  transition: background 0.3s ease;
+}
+.piano .key-1::after,
+.piano .key-3::after,
+.piano .key-5::after,
+.piano .key-6::after,
+.piano .key-8::after,
+.piano .key-10::after,
+.piano .key-12::after {
+  top: 100%;
+  width: 100%;
+  height: 76px;
+  transform-origin: top;
+  transform: rotateX(-90deg);
+  box-shadow: inset 0 -30px 50px -30px rgba(0, 0, 0, 0.3), inset 0 2px 1px white, inset 0 4px rgba(0, 0, 0, 0.1), inset 0 10px 10px -10px rgba(0, 0, 0, 0.4);
+}
+.piano .key-1::before,
+.piano .key-6::before {
+  right: 26px;
+}
+.piano .key-3::before {
+  left: 14px;
+  right: 14px;
+}
+.piano .key-5::before,
+.piano .key-12::before {
+  left: 26px;
+  right: 0;
+}
+.piano .key-8::before {
+  left: 14px;
+  right: 20px;
+}
+.piano .key-10::before {
+  left: 20px;
+  right: 14px;
+}
+.piano .key-2,
+.piano .key-4,
+.piano .key-7,
+.piano .key-9,
+.piano .key-11 {
+  position: relative;
+  color: #444;
+  width: 32px;
+  height: 250px;
+  border: none;
+  padding: 0;
+  outline: none;
+  background: #5e5e5e;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  transform: translateZ(35px);
+  transform-style: preserve-3d;
+  transform-origin: top;
+  box-shadow: inset 0 -7px 5px, inset 4px 0 5px, inset -4px 0 5px, inset 0 0 0 1000px rgba(94, 94, 94, 0.5);
+  z-index: 1;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+.piano .key-2:active,
+.piano .key-4:active,
+.piano .key-7:active,
+.piano .key-9:active,
+.piano .key-11:active {
+  transform: rotateX(-5deg) translateZ(35px);
+}
+.piano .key-2:hover,
+.piano .key-4:hover,
+.piano .key-7:hover,
+.piano .key-9:hover,
+.piano .key-11:hover {
+  background: #808080;
+}
+.piano .key-2::before,
+.piano .key-4::before,
+.piano .key-7::before,
+.piano .key-9::before,
+.piano .key-11::before {
+  content: '';
+  position: absolute;
+  background: #444;
+  border-top-left-radius: 6px;
+  top: 0;
+  height: 100%;
+  width: 39px;
+  transform-origin: left;
+  left: 1px;
+  transform: rotateY(93deg);
+  box-shadow: inset -50px 0 50px -50px black;
+}
+.piano .key-2::after,
+.piano .key-4::after,
+.piano .key-7::after,
+.piano .key-9::after,
+.piano .key-11::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: -2px;
+  width: 100%;
+  border-bottom: 31px solid #3f3f3f;
+  border-left: 2px solid transparent;
+  border-right: 2px solid transparent;
+  height: 0;
+  transform-origin: top;
+  transform: rotateX(-90deg);
+  box-shadow: 0 7px 20px rgba(0, 0, 0, 0.25), 0 3px 5px -2px rgba(255, 255, 255, 0.8), 0 5px, 0 20px #3f3f3f, 0 40px #3f3f3f;
+}
+.piano .key-2:nth-child(-n + 7)::before,
+.piano .key-4:nth-child(-n + 7)::before,
+.piano .key-7:nth-child(-n + 7)::before,
+.piano .key-9:nth-child(-n + 7)::before,
+.piano .key-11:nth-child(-n + 7)::before {
+  left: 99%;
+  transform: rotateY(87deg);
+}
+.piano .key-2,
+.piano .key-7 {
+  margin: 0 -10px 0 -22px;
+}
+.piano .key-4,
+.piano .key-11 {
+  margin: 0 -22px 0 -10px;
+}
+.piano .key-9 {
+  margin: 0 -16px 0 -16px;
+}
+.firefox,
+.ie {
+  display: none;
+}
+@-moz-document url-prefix() {
+  body > * {
+    display: none !important;
+  }
+  .firefox {
+    display: block !important;
+  }
+}
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  body > * {
+    display: none !important;
+  }
+  .ie {
+    display: block !important;
+  }
+}
+
+/* https://codepen.io/yuhomyan/pen/OJMejWJ */
+.custom-btn {
+  width: 130px;
+  height: 40px;
+  color: #edefee;
+  border-radius: 5px;
+  padding: 10px 25px;
+  font-family: 'Roboto', sans-serif;  
+  font-weight: 550;  
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+   box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+   7px 7px 20px 0px rgba(0,0,0,.1),
+   4px 4px 5px 0px rgba(0,0,0,.1);
+  outline: none;
+}
+    /* 16 */
+    .btn-16 {
+    border: none;
+    color: #272626;
+    }
+    .btn-16:after {
+    position: absolute;
+    content: "";
+    width: 0;
+    height: 100%;
+    top: 0;
+    left: 0;
+    direction: rtl;
+    z-index: -1;
+    box-shadow:
+    -7px -7px 20px 0px #fff9,
+    -4px -4px 5px 0px #fff9,
+    7px 7px 20px 0px #0002,
+    4px 4px 5px 0px #0001;
+    transition: all 0.3s ease;
+    }
+    .btn-16:hover {
+    color: #000;
+    }
+    .btn-16:hover:after {
+    left: auto;
+    right: 0;
+    width: 100%;
+    }
+    .btn-16:active {
+    top: 2px;
+    }
+    /* end * https://codepen.io/yuhomyan/pen/OJMejWJ */ 
+
+/*sound wave*/
+.listening {
+  width: 152px;
+}
+
+.wave {
+  animation: pulse 1.2s infinite;
+  height: 4px;
+  y: 11px;
+}
+
+#wave-1, #wave-1-2 {
+  animation-delay: 0.2s;
+}
+
+#wave-2, #wave-2-2 {
+  animation-delay: 1s;
+}
+
+#wave-3, #wave-3-2 {
+  animation-delay: 0.6s;
+}
+
+#wave-5, #wave-5-2 {
+  animation-delay: 0.4s;
+}
+
+#wave-4, #wave-4-2 {
+  animation-delay: 0.8s;
+}
+
+.animation-paused .wave {
+  animation-play-state: paused;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    height: 4px;
+    y: 11px;
+  }
+  50% {
+    height: 26px;
+    y: 0;
+  }
+}
+/*end sound wave*/
+
+.box {
+			float: left;
+			position: relative;
+			opacity: 0;
+			transition: all 0.3s ease-in-out;
+      cursor: grab;
+		}
+
+		.tbox {
+			width: 50px;
+			height: 50px;
+			border-radius: 10px;
+			background-color: #fefefe;
+			box-shadow: 0 0 10px rgba(0,0,0,0.3);
+			cursor: pointer;
+			transition: all 0.3s ease-in-out;
+			position: absolute;
+			top: 50px;
+			left: 50px;
+		}
+
+		.tbox:hover {
+			transform: scale(1.1);
+      cursor: grabbing;
+		}
+
+		.tbox-expanded .box {	
+			opacity: 1;			
+		}
+
+		.tbox-expanded {
+			width: 250px;
+			height: 400px;
+			padding: 20px;
+			border-radius: 10px;
+			float: left;/*_*/
+			position: absolute;
+			display: block;
+      cursor: grab;
+		}
+
+      </style>
+      
+<script>
+
+var pressedKey;
+var started = false;
+var freeze1 = false;
+var points=0;
+var failedRound = false;
+const notes = {
+  C: {audio: new Audio("notas/C4.wav"), alt: "C4"},
+  D: {audio: new Audio("notas/D4.wav"), alt: "D4"},
+  E: {audio: new Audio("notas/E4.wav"), alt: "E4"},
+  F: {audio: new Audio("notas/F4.wav"), alt: "F4"},
+  G: {audio: new Audio("notas/G4.wav"), alt: "G4"},
+  A: {audio: new Audio("notas/A4.wav"), alt: "A4"},
+  B: {audio: new Audio("notas/B4.wav"), alt: "B4"}
+};
+
+
+function start() {
+  const button = document.getElementById("button");
+  if (started) {
+    started = false;
+    button.textContent = "start";
+    restart();
+  } else {
+    started = true;
+    button.textContent = "stop";
+    noteToGuess();
+  }
+}
+
+
+
+function noteToGuess(){
+  toggleAnimation();
+  
+  function doSomething(){
+    toggleAnimation();
+  } setTimeout(doSomething, 1500);
+
+  
+  const checkedNotes = document.querySelectorAll('input[type=checkbox]:checked');
+  const playableNotes = Array.from(checkedNotes).map(note => note.value);
+  
+  if (playableNotes.length > 0) {
+    const random = Math.floor(Math.random() * playableNotes.length);
+    pressedKey = notes[playableNotes[random]].alt;
+    play(pressedKey);
+  }
+}
+
+function isRight(note){  
+  if (started == true) {
+      var myDiv = document.getElementById(note);
+      let myParagraph = document.getElementById('points');
+      if (note == pressedKey) {
+          console.log("la nota es correcta");
+          myDiv.style.backgroundColor = "green";
+          if (!failedRound) {
+              points += 1;
+          }
+          failedRound = false;
+          freeze1 = true;
+          setTimeout(function() {
+            freeze1 = false;
+            restart();
+            noteToGuess();
+          }, 300);
+      } else {
+          console.log("la nota es incorrecta");
+          myDiv.style.backgroundColor = "red";
+          failedRound = true;
+          points = 0;
+      }
+      myParagraph.textContent = points;
+  }
+}
+
+function restart(){
+  var C = document.getElementById("C4");
+  var D = document.getElementById("D4");
+  var E = document.getElementById("E4");
+  var F = document.getElementById("F4");
+  var G = document.getElementById("G4");
+  var A = document.getElementById("A4");
+  var B = document.getElementById("B4");
+  C.style.backgroundColor = "white";
+  D.style.backgroundColor = "white";
+  E.style.backgroundColor = "white";
+  F.style.backgroundColor = "white";
+  G.style.backgroundColor = "white";
+  A.style.backgroundColor = "white";
+  B.style.backgroundColor = "white";
+}
+
+function playNote(note){
+  if (!freeze1) {
+    isRight(note);
+    play(note);
+  }
+}
+
+const audioCtx = new AudioContext();
+  const gainNode = audioCtx.createGain();
+  gainNode.connect(audioCtx.destination);
+
+
+  //////////////
+  let currentAudio = null;
+
+function play(note) {
+  if (currentAudio && started == true) {
+    currentAudio.pause();
+    currentAudio.currentTime = 0;
+  }
+
+  const audio = new Audio(`notas/${note}.wav`);
+  audio.volume = document.getElementById("volume-slider").value;
+  audio.play();
+  currentAudio = audio;
+}
+
+  document.getElementById("volume-slider").addEventListener("input", () => {
+    const audios = document.getElementsByTagName("audio");
+    for (let i = 0; i < audios.length; i++) {
+      audios[i].volume = document.getElementById("volume-slider").value;
+    }
+});
+
+function toggleAnimation() {
+  const waves = document.querySelectorAll('.wave');
+  if (waves[0].style.animationPlayState === 'paused') {
+  waves.forEach(wave => wave.style.animationPlayState = 'running');
+  } else {
+  waves.forEach(wave => wave.style.animationPlayState = 'paused');
+  }
+}
+
+function addOctave(){
+  const pianoSection = document.getElementById("piano");
+
+// create C#/Db button
+const buttonCSharp = document.createElement("button");
+buttonCSharp.type = "button";
+buttonCSharp.tabindex = "-1";
+buttonCSharp.classList.add("key-2");
+buttonCSharp.title = "C#/Db";
+pianoSection.appendChild(buttonCSharp);
+
+// create D button
+const buttonD = document.createElement("button");
+buttonD.id = "D4";
+buttonD.type = "button";
+buttonD.tabindex = "-1";
+buttonD.classList.add("key-3");
+buttonD.title = "D";
+buttonD.setAttribute("onmousedown", "playNote('D4')");
+pianoSection.appendChild(buttonD);
+
+// create D#/Eb button
+const buttonDSharp = document.createElement("button");
+buttonDSharp.type = "button";
+buttonDSharp.tabindex = "-1";
+buttonDSharp.classList.add("key-4");
+buttonDSharp.title = "D#/Eb";
+pianoSection.appendChild(buttonDSharp);
+
+// create E button
+const buttonE = document.createElement("button");
+buttonE.id = "E4";
+buttonE.type = "button";
+buttonE.tabindex = "-1";
+buttonE.classList.add("key-5");
+buttonE.title = "E";
+buttonE.setAttribute("onmousedown", "playNote('E4')");
+pianoSection.appendChild(buttonE);
+
+// create F button
+const buttonF = document.createElement("button");
+buttonF.id = "F4";
+buttonF.type = "button";
+buttonF.tabindex = "-1";
+buttonF.classList.add("key-6");
+buttonF.title = "F";
+buttonF.setAttribute("onmousedown", "playNote('F4')");
+pianoSection.appendChild(buttonF);
+
+// create F#/Gb button
+const buttonFSharp = document.createElement("button");
+buttonFSharp.type = "button";
+buttonFSharp.tabindex = "-1";
+buttonFSharp.classList.add("key-7");
+buttonFSharp.title = "F#/Gb";
+pianoSection.appendChild(buttonFSharp);
+
+// create G button
+const buttonG = document.createElement("button");
+buttonG.id = "G4";
+buttonG.type = "button";
+buttonG.tabindex = "-1";
+buttonG.classList.add("key-8");
+buttonG.title = "G";
+buttonG.setAttribute("onmousedown", "playNote('G4')");
+pianoSection.appendChild(buttonG);
+
+// create G#/Ab button
+const buttonGSharp = document.createElement("button");
+buttonGSharp.type = "button";
+buttonGSharp.tabindex = "-1";
+buttonGSharp.classList.add("key-9");
+buttonGSharp.title = "G#/Ab";
+pianoSection.appendChild(buttonGSharp);
+
+// create A button
+const buttonA = document.createElement("button");
+buttonA.id = "A4";
+buttonA.type = "button";
+buttonA.tabindex = "-1";
+buttonA.classList.add("key-10");
+buttonA.title = "A";
+buttonA.setAttribute("onmousedown", "playNote('A4')");
+pianoSection.appendChild(buttonA);
+
+// create A#/Bb button
+const buttonASharp = document.createElement("button");
+buttonASharp.type = "button";
+buttonASharp.tabindex = "-1";
+buttonASharp.classList.add("key-11");
+buttonASharp.title = "A#/Bb";
+pianoSection.appendChild(buttonASharp);
+
+
+// create B button
+const buttonB = document.createElement("button");
+buttonA.id = "B4";
+buttonA.type = "button";
+buttonA.tabindex = "-1";
+buttonA.classList.add("key-11");
+buttonA.title = "B";
+buttonA.setAttribute("onmousedown", "playNote('A4')");
+pianoSection.appendChild(buttonA);
+}
+
+function addOctaveM(){
+  // create C# button
+const buttonCSharp = document.createElement("button");
+buttonCSharp.type = "button";
+buttonCSharp.tabIndex = "-1";
+buttonCSharp.className = "key-2";
+buttonCSharp.title = "C#/Db";
+
+// insert C# button before first button
+const pianoSection = document.getElementById("piano");
+const firstButton = pianoSection.firstChild;
+pianoSection.insertBefore(buttonCSharp, firstButton);
+
+// create D button
+const buttonD = document.createElement("button");
+buttonD.id = "D4";
+buttonD.type = "button";
+buttonD.tabIndex = "-1";
+buttonD.className = "key-3";
+buttonD.title = "D";
+
+// insert D button before first button
+pianoSection.insertBefore(buttonD, firstButton);
+
+// create D# button
+const buttonDSharp = document.createElement("button");
+buttonDSharp.type = "button";
+buttonDSharp.tabIndex = "-1";
+buttonDSharp.className = "key-4";
+buttonDSharp.title = "D#/Eb";
+
+// insert D# button before first button
+pianoSection.insertBefore(buttonDSharp, firstButton);
+
+// create E button
+const buttonE = document.createElement("button");
+buttonE.id = "E4";
+buttonE.type = "button";
+buttonE.tabIndex = "-1";
+buttonE.className = "key-5";
+buttonE.title = "E";
+
+// insert E button before first button
+pianoSection.insertBefore(buttonE, firstButton);
+
+// create F button
+const buttonF = document.createElement("button");
+buttonF.id = "F4";
+buttonF.type = "button";
+buttonF.tabIndex = "-1";
+buttonF.className = "key-6";
+buttonF.title = "F";
+
+// insert F button before first button
+pianoSection.insertBefore(buttonF, firstButton);
+
+// create F# button
+const buttonFSharp = document.createElement("button");
+buttonFSharp.type = "button";
+buttonFSharp.tabIndex = "-1";
+buttonFSharp.className = "key-7";
+buttonFSharp.title = "F#/Gb";
+
+// insert F# button before first button
+pianoSection.insertBefore(buttonFSharp, firstButton);
+
+// create G button
+const buttonG = document.createElement("button");
+buttonG.id = "G4";
+buttonG.type = "button";
+buttonG.tabIndex = "-1";
+buttonG.className = "key-8";
+buttonG.title = "G";
+
+// insert G button before first button
+pianoSection.insertBefore(buttonG, firstButton);
+
+// create G# button
+const buttonGSharp = document.createElement("button");
+buttonGSharp.type = "button";
+buttonGSharp.tabIndex = "-1";
+buttonGSharp.className = "key-9";
+buttonGSharp.title = "G#/Ab";
+
+// insert G# button before first button
+pianoSection.insertBefore(buttonGSharp, firstButton);
+
+// create A button
+const buttonA = document.createElement("button");
+buttonA.id = "A4";
+buttonA.type = "button";
+buttonA.tabIndex = "-1";
+buttonA.className = "key-10";
+buttonA.title = "A";
+
+// insert A button before first button
+pianoSection.insertBefore(buttonA, firstButton);
+
+}
+
+const box = document.querySelector('.box');
+let isDragging = false;
+let startX;
+let startY;
+let initialX;
+let initialY;
+
+box.addEventListener('mousedown', function(e) {
+  isDragging = true;
+  startX = e.clientX;
+  startY = e.clientY;
+  initialX = box.offsetLeft;
+  initialY = box.offsetTop;
+});
+
+box.addEventListener('mousemove', function(e) {
+  if (isDragging) {
+    const currentX = e.clientX - startX;
+    const currentY = e.clientY - startY;
+
+    box.style.left = `${initialX + currentX}px`;
+    box.style.top = `${initialY + currentY}px`;
+  }
+});
+
+box.addEventListener('mouseup', function() {
+  isDragging = false;
+});
+
+</script>
+
+
+
+  <body onload="toggleAnimation()">
+
+    
+    <div style="margin-left: 100px;">
+        <h1 id="points" >0</h1>
+        <button id="button" onclick="start()" class="custom-btn btn-16" style="margin-left: 50px;margin-right: 50px;">start</button>
+        <div >
+          <div class="listening">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 76 26">
+              <defs><style>.wave{fill:#231f20;}</style></defs>
+              <g id="audio-wave" data-name="audio-wave">
+                <rect id="wave-5" class="wave" x="32" y="7" width="4" height="12" rx="2" ry="2"/>
+                <rect id="wave-4" class="wave" x="24" y="2" width="4" height="22" rx="2" ry="2"/>
+                <rect id="wave-3" class="wave" x="16" width="4" height="26" rx="2" ry="2"/>
+                <rect id="wave-2" class="wave" x="8" y="5" width="4" height="16" rx="2" ry="2"/>
+                <rect id="wave-1" class="wave" y="9" width="4" height="8" rx="2" ry="2"/>
+                <rect id="wave-5-2" data-name="wave-4" class="wave" x="72" y="7" width="4" height="12" rx="2" ry="2"/>
+                <rect id="wave-4-2" data-name="wave-5" class="wave" x="64" y="2" width="4" height="22" rx="2" ry="2"/>
+                <rect id="wave-3-2" data-name="wave-3" class="wave" x="56" width="4" height="26" rx="2" ry="2"/>
+                <rect id="wave-2-2" data-name="wave-2" class="wave" x="48" y="5" width="4" height="16" rx="2" ry="2"/>
+                <rect id="wave-1-2" data-name="wave-1" class="wave" x="40" y="9" width="4" height="8" rx="2" ry="2"/>
+              </g>
+            </svg>
+          </div>
+    </div>
+    </div>
+
+    
+    
+  
+   
+      <div >
+        <section class="piano" id="piano" >
+          <!-- <button type="button" tabindex="-1" class="key-12" title="B"></button> -->
+          <button id="C4" onmousedown="playNote('C4')" type="button" tabindex="-1" class="key-1" title="C"></button>
+          <button type="button" tabindex="-1" class="key-2" title="C#/Db"></button>
+          <button id="D4" onmousedown="playNote('D4')" type="button" tabindex="-1" class="key-3" title="D"></button>
+          <button type="button" tabindex="-1" class="key-4" title="D#/Eb"></button>
+          <button id="E4" onmousedown="playNote('E4')" type="button" tabindex="-1" class="key-5" title="E"></button>
+          <button id="F4" onmousedown="playNote('F4')" type="button" tabindex="-1" class="key-6" title="F"></button>
+          <button type="button" tabindex="-1" class="key-7" title="F#/Gb"></button>
+          <button id="G4" onmousedown="playNote('G4')" type="button" tabindex="-1" class="key-8" title="G"></button>
+          <button type="button" tabindex="-1" class="key-9" title="G#/Ab"></button>
+          <button id="A4" onmousedown="playNote('A4')" type="button" tabindex="-1" class="key-10" title="A"></button>
+          <button type="button" tabindex="-1" class="key-11" title="A#/Bb"></button>
+          <button id="B4" onmousedown="playNote('B4')"type="button" tabindex="-1" class="key-12" title="B"></button>
+          <!-- <button type="button" tabindex="-1" class="key-1" title="C"></button> -->
+        </section>
+      </div>
+
+      <div class="tbox">
+        <div class="box" style="margin-top: 100px; display: flex; flex-direction: column;">
+          <h2>Notes to practice</h2>
+          <br>
+          <form>
+            <label><input type="checkbox" name="C" id="C" value="C" checked> C</label>
+            <label><input type="checkbox" name="D" id="D" value="D" checked> D</label>
+            <label><input type="checkbox" name="E" id="E" value="E" checked> E</label>
+            <label><input type="checkbox" name="F" id="F" value="F" checked> F</label>
+            <label><input type="checkbox" name="G" id="G" value="G" checked> G</label>
+            <label><input type="checkbox" name="A" id="A" value="A" checked> A</label>
+            <label><input type="checkbox" name="B" id="B" value="B" checked> B</label>
+          </form>
+          
+          <button id="button" onclick=""   class="custom-btn btn-16">add minor octave</button>
+          <button id="button" onclick=""  class="custom-btn btn-16">add major octave</button>
+        </div>
+      </div>
+      
+      
+     
+      <script>
+        const tinybox = document.querySelector(".tbox");
+      
+        tinybox.addEventListener("click", function(event) {
+          const target = event.target;
+          const isButton = target.matches("button");
+          const isCheckbox = target.matches("input[type='checkbox']");
+      
+          if (!isButton && !isCheckbox) {
+            tinybox.classList.toggle("tbox-expanded");
+          }
+        });
+      </script>
+
+
+<div style="margin-top: 100px; display: flex; flex-direction: column;">
+  <div id="volume-slider-container">
+    <input type="range" min="0" max="1" step="0.01" value="1" id="volume-slider">
+  </div>
+
+  <div>
+    <p>
+      Piano design and animation by: <a href="https://codepen.io/waterplea/pen/KMYvLM">Waterplea</a> <br>
+      Button by: <a href="https://codepen.io/yuhomyan/pen/OJMejWJ">Yuhomyan</a>  <br>
+      Sound wave by: <a href="https://codepen.io/gsroth/details/GMBVyv">Graham Roth</a>
+    </p>
+  </div>
+</div>
+
+
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+  </body>
+</html>
