@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Quiz</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container">
+    <div id="questionContainer" class="question"></div>
+    <div id="questionNumber" class="mt-3"></div>
+    <button id="previousBtn" class="btn btn-primary" disabled>Previous</button>
+    <button id="nextBtn" class="btn btn-primary">Next</button>
+    <div id="error" class="text-danger mt-3"></div>
+  </div>
+
+  <script>
+    var currentQuestion = 0;
+    var userAnswers = [];
+    var questions = [];
+
+   // Extract JSON file name from the URL
+   var urlParams = new URLSearchParams(window.location.search);
+    var jsonFileName = urlParams.get('json');
+
+    // Fetch questions from the JSON file
+    fetch(jsonFileName)
+      .then(response => response.json())
+      .then(data => {
+        questions = shuffleArray(data);
+        displayQuestion();
+      })
+      .catch(error => console.error(error));
+
+    var questionContainer = document.getElementById('questionContainer');
+    var questionNumberElement = document.getElementById('questionNumber');
+    var previousBtn = document.getElementById('previousBtn');
+    var nextBtn = document.getElementById('nextBtn');
+    var errorElement = document.getElementById('error');
+
+    function displayQuestion() {
+      var question = questions[currentQuestion];
+
+      questionContainer.innerHTML = `
+        <h3>${question.question}</h3>
+        <div class="options">
+          ${question.options.map(option => `
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="questionOption" value="${option.charAt(0)}" id="${option.charAt(0)}">
+              <label class="form-check-label" for="${option.charAt(0)}">${option}</label>
+            </div>
+          `).join('')}
+        </div>
+      `;
+
+      questionNumberElement.textContent = `Question ${currentQuestion + 1}/${questions.length}`;
+      previousBtn.disabled = currentQuestion === 0;
+      errorElement.textContent = "";
+    }
+
+    function calculateScore() {
+      var selectedOption = document.querySelector('input[name="questionOption"]:checked');
+
+      if (selectedOption) {
+        userAnswers[currentQuestion] = selectedOption.value;
+        currentQuestion++;
+
+        if (currentQuestion < questions.length) {
+          displayQuestion();
+        } else {
+          displayResult();
+        }
+      } else {
+        errorElement.textContent = "Please select an option.";
+      }
+    }
+
+    function displayResult() {
+      var score = 0;
+      for (var i = 0; i < questions.length; i++) {
+        if (userAnswers[i] === questions[i].answer) {
+          score++;
+        }
+      }
+
+      questionContainer.innerHTML = `
+        <h3>Your score: ${score}/${questions.length}</h3>
+      `;
+
+      questionNumberElement.textContent = "";
+      previousBtn.style.display = "none";
+      nextBtn.style.display = "none";
+      errorElement.textContent = "";
+    }
+
+    function goBack() {
+      currentQuestion--;
+      displayQuestion();
+    }
+
+    function shuffleArray(array) {
+      var currentIndex = array.length, temporaryValue, randomIndex;
+
+      while (currentIndex !== 0) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+      }
+
+      return array;
+    }
+
+    nextBtn.addEventListener("click", calculateScore);
+    previousBtn.addEventListener("click", goBack);
+  </script>
+</body>
+</html>
