@@ -1,0 +1,102 @@
+[
+    {
+      "question": "What is one of the primary reasons social engineering attacks are successful?",
+      "options": [
+        "a) Advanced hacking techniques",
+        "b) Lack of cybersecurity tools",
+        "c) Exploiting human psychology",
+        "d) Weak network infrastructure"
+      ],
+      "answer": "c"
+    },
+    {
+      "question": "Which psychological tactic is used in social engineering to make a target feel hesitant to challenge another?",
+      "options": [
+        "a) Authority",
+        "b) Consensus",
+        "c) Intimidation",
+        "d) Trust"
+      ],
+      "answer": "a"
+    },
+    {
+      "question": "Which of the following is an example of a social engineering attack that exploits authority?",
+      "options": [
+        "a) Sending a phishing email with a malicious attachment",
+        "b) Impersonating a law enforcement officer to threaten targets",
+        "c) Creating a sense of urgency through time-limited offers",
+        "d) Building trust by impersonating a reputable company"
+      ],
+      "answer": "b"
+    },
+    {
+      "question": "How do social engineers manipulate group dynamics and decision-making processes?",
+      "options": [
+        "a) By exploiting scarcity",
+        "b) Through intimidation tactics",
+        "c) By creating a sense of familiarity",
+        "d) Using consensus-building techniques"
+      ],
+      "answer": "d"
+    },
+    {
+      "question": "The scarcity principle in social engineering relies on:",
+      "options": [
+        "a) Building trust with the target",
+        "b) Exploiting shared experiences",
+        "c) Creating a sense of urgency",
+        "d) Manipulating group dynamics"
+      ],
+      "answer": "c"
+    },
+    {
+      "question": "Which psychological aspect do social engineers leverage by emphasizing shared experiences or commonalities?",
+      "options": [
+        "a) Authority",
+        "b) Trust",
+        "c) Familiarity",
+        "d) Urgency"
+      ],
+      "answer": "c"
+    },
+    {
+      "question": "How do social engineers exploit trust in social engineering attacks?",
+      "options": [
+        "a) By using aggressive language and intimidation tactics",
+        "b) By creating a sense of urgency through time constraints",
+        "c) By impersonating authoritative figures or trusted entities",
+        "d) By manipulating group dynamics and negotiations"
+      ],
+      "answer": "c"
+    },
+    {
+      "question": "Which psychological tactic in social engineering creates a sense of urgency to prompt quick decisions?",
+      "options": [
+        "a) Consensus",
+        "b) Trust",
+        "c) Familiarity",
+        "d) Urgency"
+      ],
+      "answer": "d"
+    },
+    {
+      "question": "What is one effective defense against social engineering attacks?",
+      "options": [
+        "a) Implementing strong policies and procedures",
+        "b) Limiting employee training programs",
+        "c) Ignoring public awareness campaigns",
+        "d) Relying solely on single-factor authentication"
+      ],
+      "answer": "a"
+    },
+    {
+      "question": "Why is it important for organizations to stay proactive in defending against social engineering attacks?",
+      "options": [
+        "a) Social engineering attacks are not common.",
+        "b) Social engineering techniques do not change over time.",
+        "c) Cybersecurity tools are sufficient to prevent all social engineering attacks.",
+        "d) Social engineering attacks evolve, and new tactics are constantly being used."
+      ],
+      "answer": "d"
+    }
+  ]
