@@ -1,50 +1,187 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulario de Reservación de Hotel</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-  <title>{{ page.title }}</title>
+  <style>    
+    body {
+      background-image: url("https://i.pinimg.com/originals/10/3b/85/103b851bff79e81d90f2b90eb9574e72.jpg");
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-attachment: fixed;
+      font-size: medium;      
+    } 
+    .container {
+      max-width: 500px;
+      margin-top: 50px;
+      margin-bottom: 50px;
+      border-radius: 10px;
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 20px;
+    }
+    .dropdown-item img {
+      width: 20px; 
+      height: auto; 
+      margin-right: 5px; 
+      vertical-align: middle;
+    }
+  </style>
+
+<script>
+  function togglePasswordVisibility() {
+      var passwordInput = document.getElementById('contrasena');
+      var passwordToggle = document.getElementById('togglePassword');      
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        passwordToggle.innerText = 'Ocultar';
+      } else {
+        passwordInput.type = 'password';
+        passwordToggle.innerText = 'Mostrar';
+      }
+  }
+
+  function formatearRut(input) {
+    var rut = input.value.replace(/[^\dkK]/g, '');    
+    if (rut.length > 1) {      
+      rut = rut.substring(0, rut.length - 1) + '-' + rut.charAt(rut.length - 1);
+      rut = rut.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+    }    
+    input.value = rut;
+  }
+
+   function seleccionarPais(pais) {
+    var telefono = document.getElementById('telefono');
+    telefono.value =  pais.textContent;
+  }  
+
+</script>
 </head>
 <body>
-  <header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container">
-        <a class="navbar-brand" href="/">My Website</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="/">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/about">About</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/contact">Contact</a>
-            </li>
-          </ul>
+  <div class="container">
+    <h2>Reservación de Hotel</h2>
+
+    <form action="reserva.php" method="POST">
+      <div class="form-group">
+        <label for="nombre">Nombre:</label>
+        <input type="text" class="form-control" id="nombre" name="nombre" required>
+      </div>
+
+      <div class="form-group">
+        <label for="rut">RUT:</label>
+        <input type="text" id="rut" name="rut" maxlength="12" 
+               oninput="formatearRut(this)" 
+               pattern="\d{1,2}\.\d{3}\.\d{3}-[\dkK]" 
+               title="Ingrese un RUT válido en el formato 00.000.000-0 o 0.000.000-0" 
+               class="form-control" required>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Correo Electrónico:</label>
+        <input type="email" class="form-control" id="email" name="email" required>
+      </div>
+
+      <div class="form-group">
+      <label for="contrasena">Contraseña:</label>
+      <div class="input-group">
+        <input type="password" id="contrasena" name="contrasena" class="form-control" required>
+        <div class="input-group-append">
+          <button type="button" id="togglePassword" class="btn btn-outline-secondary" onclick="togglePasswordVisibility()">Mostrar</button>
         </div>
       </div>
-    </nav>
-  </header>
+    </div>
 
-  <div class="container mt-4">
-    <h1>{{ page.title }}</h1>
-
-    <div class="row">
-      <div class="col-md-6">
-        <h2>Section 1</h2>
-        <p>This is the content for section 1.</p>
-      </div>
-      <div class="col-md-6">
-        <h2>Section 2</h2>
-        <p>This is the content for section 2.</p>
+      
+    <div class="form-group">
+      <label for="pais">Teléfono:</label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">+</button>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="#" onclick="seleccionarPais(this)"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_Argentina.svg/200px-Flag_of_Argentina.svg.png" alt="Argentina"> +54</a>
+            <a class="dropdown-item" href="#" onclick="seleccionarPais(this)"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Flag_of_Brazil.svg/300px-Flag_of_Brazil.svg.png" alt="Brasil"> +55</a>
+            <a class="dropdown-item" href="#" onclick="seleccionarPais(this)"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Chile.svg/200px-Flag_of_Chile.svg.png" alt="Chile"> +56</a>
+          </div>
+        </div>
+        <input type="text" id="telefono" name="telefono" class="form-control" required>
       </div>
     </div>
+
+      <div class="form-group">
+        <label for="fecha_llegada">Fecha de Llegada:</label>
+        <input type="date" class="form-control" id="fecha_llegada" name="fecha_llegada" required>
+      </div>
+
+      <div class="form-group">
+        <label for="fecha_salida">Fecha de Salida:</label>
+        <input type="date" class="form-control" id="fecha_salida" name="fecha_salida" required>
+      </div>
+
+      
+      <div class="form-group">
+        <label>Tipo de Habitación:</label><br>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="tipo_habitacion" id="individual" value="individual" required>
+          <label class="form-check-label" for="individual">Individual</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="tipo_habitacion" id="doble" value="doble" required>
+          <label class="form-check-label" for="doble">Doble</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="tipo_habitacion" id="suite" value="suite" required>
+          <label class="form-check-label" for="suite">Suite</label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="adultos">Cantidad de Adultos:</label>
+        <select class="form-control" id="adultos" name="adultos" required>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="ninos">Cantidad de Niños:</label>
+        <select class="form-control" id="ninos" name="ninos" required>
+          <option value="0">0</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Servicios Adicionales:</label><br>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="servicio_comida" name="servicios[]" value="comida">
+          <label class="form-check-label" for="servicio_comida">Servicio de Comida</label>          
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="servicio_internet" name="servicios[]" value="internet">
+          <label class="form-check-label" for="servicio_internet">Internet Rápido (Fibra)</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="servicio_transporte" name="servicios[]" value="transporte">
+          <label class="form-check-label" for="servicio_transporte">Servicio de Transporte</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="servicio_viaje" name="servicios[]" value="viaje">
+          <label class="form-check-label" for="servicio_viaje">Viaje Guiado</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="servicio_mucama" name="servicios[]" value="mucama">
+          <label class="form-check-label" for="servicio_mucama">Servicio de Mucama</label>
+        </div>
+      </div>
+
+      
+      <button type="submit" class="btn btn-primary">Enviar Reservación</button>
+    </form>
   </div>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
