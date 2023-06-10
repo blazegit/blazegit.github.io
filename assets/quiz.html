@@ -3,15 +3,39 @@
 <head>
   <title>Quiz</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  
+  <style>
+    body {
+      background-color: rgb(27, 27, 30);
+      color: #fff;
+    }
+    .container {
+      max-width: 600px;
+      margin-top: 30px;
+    }
+    .question {
+      margin-bottom: 20px;
+    }
+    .options {
+      margin-top: 10px;
+    }
+    .btn-container {
+      display: flex;
+      justify-content: space-between;
+    }
+    .error {
+      margin-top: 10px;
+    }
+  </style>
 </head>
-<body style="background-color: rgb(27, 27, 30);color: #fff;">
+<body>
   <div class="container">
     <div id="questionContainer" class="question"></div>
     <div id="questionNumber" class="mt-3"></div>
-    <button id="previousBtn" class="btn btn-primary" disabled>Previous</button>
-    <button id="nextBtn" class="btn btn-primary">Next</button>
-    <div id="error" class="text-danger mt-3"></div>
+    <div class="btn-container">
+      <button id="previousBtn" class="btn btn-primary" disabled>Previous</button>
+      <button id="nextBtn" class="btn btn-primary">Next</button>
+    </div>
+    <div id="error" class="text-danger error"></div>
   </div>
 
   <script>
@@ -19,8 +43,8 @@
     var userAnswers = [];
     var questions = [];
 
-   // Extract JSON file name from the URL
-   var urlParams = new URLSearchParams(window.location.search);
+    // Extract JSON file name from the URL
+    var urlParams = new URLSearchParams(window.location.search);
     var jsonFileName = urlParams.get('json');
 
     // Fetch questions from the JSON file
@@ -40,16 +64,20 @@
 
     function displayQuestion() {
       var question = questions[currentQuestion];
+      var optionsHTML = question.options.map(option => {
+        var checked = userAnswers[currentQuestion] === option.charAt(0) ? 'checked' : '';
+        return `
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="questionOption" value="${option.charAt(0)}" id="${option.charAt(0)}" ${checked}>
+            <label class="form-check-label" for="${option.charAt(0)}">${option}</label>
+          </div>
+        `;
+      }).join('');
 
       questionContainer.innerHTML = `
         <h3>${question.question}</h3>
         <div class="options">
-          ${question.options.map(option => `
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="questionOption" value="${option.charAt(0)}" id="${option.charAt(0)}">
-              <label class="form-check-label" for="${option.charAt(0)}">${option}</label>
-            </div>
-          `).join('')}
+          ${optionsHTML}
         </div>
       `;
 
