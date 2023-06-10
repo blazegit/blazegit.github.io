@@ -63,28 +63,28 @@
     var errorElement = document.getElementById('error');
 
     function displayQuestion() {
-      var question = questions[currentQuestion];
-      var optionsHTML = question.options.map(option => {
-        var checked = userAnswers[currentQuestion] === option.charAt(0) ? 'checked' : '';
-        return `
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="questionOption" value="${option.charAt(0)}" id="${option.charAt(0)}" ${checked}>
-            <label class="form-check-label" for="${option.charAt(0)}">${option}</label>
-          </div>
-        `;
-      }).join('');
+  var question = questions[currentQuestion];
+  var optionsHTML = question.options.map(option => {
+    var checked = userAnswers[currentQuestion] === option.charAt(0) ? 'checked' : '';
+    return `
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="questionOption" value="${option.charAt(0)}" id="${option.charAt(0)}" ${checked}>
+        <label class="form-check-label" for="${option.charAt(0)}">${option}</label>
+      </div>
+    `;
+  }).join('');
 
-      questionContainer.innerHTML = `
-        <h3>${question.question}</h3>
-        <div class="options">
-          ${optionsHTML}
-        </div>
-      `;
+  questionContainer.innerHTML = `
+    <h3>${question.question}</h3>
+    <div class="options">
+      ${optionsHTML}
+    </div>
+  `;
 
-      questionNumberElement.textContent = `Question ${currentQuestion + 1}/${questions.length}`;
-      previousBtn.disabled = currentQuestion === 0;
-      errorElement.textContent = "";
-    }
+  questionNumberElement.textContent = `Question ${currentQuestion + 1}/${questions.length}`;
+  previousBtn.disabled = currentQuestion === 0;
+  errorElement.textContent = "";
+}
 
     function calculateScore() {
   var selectedOption = document.querySelector('input[name="questionOption"]:checked');
