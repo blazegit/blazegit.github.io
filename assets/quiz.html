@@ -87,21 +87,20 @@
     }
 
     function calculateScore() {
-      var selectedOption = document.querySelector('input[name="questionOption"]:checked');
+  var selectedOption = document.querySelector('input[name="questionOption"]:checked');
 
-      if (selectedOption) {
-        userAnswers[currentQuestion] = selectedOption.value;
-        currentQuestion++;
+  if (selectedOption) {
+    userAnswers[currentQuestion] = selectedOption.value;
+  }
 
-        if (currentQuestion < questions.length) {
-          displayQuestion();
-        } else {
-          displayResult();
-        }
-      } else {
-        errorElement.textContent = "Please select an option.";
-      }
-    }
+  currentQuestion++;
+
+  if (currentQuestion < questions.length) {
+    displayQuestion();
+  } else {
+    displayResult();
+  }
+}
 
     function displayResult() {
       var score = 0;
