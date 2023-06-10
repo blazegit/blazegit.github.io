@@ -25,10 +25,6 @@
     .error {
       margin-top: 10px;
     }
-    .selected {
-      background-color: #007bff;
-      color: #fff;
-    }
   </style>
 </head>
 <body>
@@ -70,11 +66,10 @@
   var question = questions[currentQuestion];
   var optionsHTML = question.options.map(option => {
     var checked = userAnswers[currentQuestion] === option.charAt(0) ? 'checked' : '';
-    var selectedClass = userAnswers[currentQuestion] === option.charAt(0) ? 'selected' : '';
     return `
       <div class="form-check">
         <input class="form-check-input" type="radio" name="questionOption" value="${option.charAt(0)}" id="${option.charAt(0)}" ${checked}>
-        <label class="form-check-label ${selectedClass}" for="${option.charAt(0)}">${option}</label>
+        <label class="form-check-label" for="${option.charAt(0)}">${option}</label>
       </div>
     `;
   }).join('');
@@ -90,7 +85,6 @@
   previousBtn.disabled = currentQuestion === 0;
   errorElement.textContent = "";
 }
-
 
     function calculateScore() {
   var selectedOption = document.querySelector('input[name="questionOption"]:checked');
