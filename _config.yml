@@ -41,11 +41,11 @@ social:
   email: hernancastillore@gmail.com # change to your email address
   links:
     # The first element serves as the copyright owner's link
-    - https://twitter.com/username # change to your twitter homepage
+    # https://twitter.com/username # change to your twitter homepage
     - https://github.com/blazegit # change to your github homepage
     # Uncomment below to add more social links
     # - https://www.facebook.com/username
-    # - https://www.linkedin.com/in/username
+    - https://www.linkedin.com/in/hern%C3%A1n-castillo-b143aa213/
 
 google_site_verification: # fill in to your verification string
 
@@ -80,7 +80,7 @@ theme_mode: dark
 img_cdn:
 
 # the avatar on sidebar, support local or CORS resources
-avatar:
+avatar: /assets/kage_.webp
 
 # boolean type, the global switch for TOC in posts.
 toc: true
