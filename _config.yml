@@ -28,6 +28,9 @@ description: >- # used by seo meta and the atom feed
 # fill in the protocol & hostname for your site, e.g., 'https://username.github.io'
 url: ""
 
+future: true
+
+
 github:
   username: blazegit # change to your github username
 
