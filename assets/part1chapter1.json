@@ -70,22 +70,12 @@
       "answer": "c"
     },
     {
-      "question": "Which psychological tactic in social engineering creates a sense of urgency to prompt quick decisions?",
-      "options": [
-        "a) Consensus",
-        "b) Trust",
-        "c) Familiarity",
-        "d) Urgency"
-      ],
-      "answer": "d"
-    },
-    {
-      "question": "What is one effective defense against social engineering attacks?",
+      "question": "Which measure is often considered a reliable defense against social engineering attacks?",
       "options": [
         "a) Implementing strong policies and procedures",
-        "b) Limiting employee training programs",
-        "c) Ignoring public awareness campaigns",
-        "d) Relying solely on single-factor authentication"
+        "b) Banning all external communications",
+        "c) Avoiding software updates",
+        "d) Disabling network firewalls"
       ],
       "answer": "a"
     },
@@ -98,5 +88,55 @@
         "d) Social engineering attacks evolve, and new tactics are constantly being used."
       ],
       "answer": "d"
+    },
+    {
+      "question": "In cybersecurity, what characterizes impersonation and identity fraud?",
+      "options": [
+        "a) Impersonation is the use of false credentials, while identity fraud involves assuming someone else's identity.",
+        "b) Impersonation is synonymous with identity fraud, describing the same concept.",
+        "c) Impersonation is the act of pretending to be someone else, while identity fraud involves stealing personal information for fraudulent purposes.",
+        "d) Impersonation is a type of identity fraud used for online scams and phishing attacks."
+      ],
+      "answer": "c"
+    },
+    {
+      "question": "What is the primary distinction between pretending and pretexting in the context of social engineering?",
+      "options": [
+        "a) Pretending involves adding false information to appear more credible, while pretexting relies on creating fabricated scenarios.",
+        "b) Pretending is a form of identity theft, while pretexting is a form of impersonation.",
+        "c) Pretending is a deceptive act, while pretexting involves using valid reasons to gain information.",
+        "d) Pretending is a digital threat, while pretexting is a physical threat."
+      ],
+      "answer": "a"
+    },
+    {
+      "question": "Which of the following communication methods is typically associated with vishing?",
+      "options": [
+        "a) Email",
+        "b) SMS messages",
+        "c) Voice calls",
+        "d) Instant messaging"
+      ],
+      "answer": "c"
+    },
+    {
+      "question": "What distinguishes a hoax from other forms of deception?",
+      "options": [
+        "a) Hoaxes are always perpetrated through email.",
+        "b) Hoaxes involve physical rummaging through discarded materials.",
+        "c) Hoaxes aim to trick individuals into believing something false or misleading.",
+        "d) Hoaxes are typically associated with influence campaigns."
+      ],
+      "answer": "c"
+    },
+    {
+      "question": "What distinguishes pharming from phishing websites in cyberattacks?",
+      "options": [
+        "a) Pharming involves manipulating DNS settings to redirect users, while phishing websites rely on deceptive emails to trick victims.",
+        "b) Phishing websites use DNS manipulation to deceive users, while pharming primarily targets individual email accounts.",
+        "c) Pharming and phishing websites are essentially the same, both using email-based tactics to deceive victims.",
+        "d) Pharming and phishing websites both rely on deceptive email campaigns to manipulate victims."
+      ],
+      "answer": "a"
     }
   ]
