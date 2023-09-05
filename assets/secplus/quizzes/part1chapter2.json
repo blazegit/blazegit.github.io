@@ -1,0 +1,96 @@
+[
+    {
+        "question": "What is the characteristic of 'Ransomware'?",
+        "options": [
+          "a) It spreads across networks without human intervention.",
+          "b) It encrypts files and demands a ransom for their release.",
+          "c) It provides attackers with remote access to compromised systems.",
+          "d) It secretly monitors and gathers information about a user's activities."
+        ],
+        "answer": "b"
+      },
+      {
+        "question": "What type of malware disguises itself as legitimate software to trick users into installing it?",
+        "options": [
+          "a) Worm",
+          "b) Spyware",
+          "c) Rootkit",
+          "d) Trojan"
+        ],
+        "answer": "d"
+      },
+      {
+        "question": "Which password-guessing technique systematically tries every possible combination until the correct password is found?",
+        "options": [
+          "a) Spraying",
+          "b) Dictionary",
+          "c) Rainbow Tables",
+          "d) Brute Force"
+        ],
+        "answer": "d"
+      },
+      {
+        "question": "What is a 'Rainbow Table' used for in password cracking?",
+        "options": [
+          "a) It performs online brute-force attacks.",
+          "b) It speeds up password cracking by mapping hash values to their corresponding passwords.",
+          "c) It captures keystrokes on compromised systems.",
+          "d) It exploits vulnerabilities in password security."
+        ],
+        "answer": "b"
+      },
+      {
+        "question": "What type of attack exploits physical vulnerabilities in systems or devices?",
+        "options": [
+          "a) Adversarial Artificial Intelligence",
+          "b) Cloud-Based Attack",
+          "c) Physical Attack",
+          "d) Supply-Chain Attack"
+        ],
+        "answer": "c"
+      },
+      {
+        "question": "Which cryptographic attack exploits the probability of collisions in hashing algorithms?",
+        "options": [
+          "a) Collision Attack",
+          "b) Downgrade Attack",
+          "c) Birthday Attack",
+          "d) Brute Force Attack"
+        ],
+        "answer": "c"
+      },
+      {
+        "question": "What type of malware provides attackers with unauthorized remote access to a compromised system?",
+        "options": [
+          "a) Ransomware",
+          "b) Rootkit",
+          "c) Logic Bomb",
+          "d) Worm"
+        ],
+        "answer": "b"
+      },
+      {
+        "question": "What is the primary purpose of a Remote-Access Trojan (RAT)?",
+        "options": [
+          "a) To encrypt files and demand a ransom for their release.",
+          "b) To provide unauthorized remote access to a compromised system.",
+          "c) To secretly monitor and gather information about a user's activities.",
+          "d) To spread across networks without human intervention."
+        ],
+        "answer": "b"
+      }
+      
+      
+      
+      
+
+      
+      
+      
+      
+
+
+
+
+
+]
