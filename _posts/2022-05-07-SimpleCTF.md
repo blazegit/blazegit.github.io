@@ -1,7 +1,7 @@
 ---
 title: Simple CTF
 date: 2022-05-07 17:00:00 +500
-categories: [THM, easy machines]
+categories: [thm, easy-machines]
 tags: [hash]    # TAG names should always be lowercase
 ---
 

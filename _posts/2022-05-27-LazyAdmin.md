@@ -1,7 +1,7 @@
 ---
 title: Lazy Admin
 date: 2022-05-27 17:00:00 +500
-categories: [THM, easy machines]
+categories: [thm, easy-machines]
 tags: []    # TAG names should always be lowercase
 ---
 

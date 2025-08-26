@@ -1,7 +1,7 @@
 ---
 title: Agent Sudo
 date: 2022-06-13 17:00:00 +500
-categories: [THM, easy machines]
+categories: [thm, easy-machines]
 tags: [hash, bruteforce]    # TAG names should always be lowercase
 ---
 
