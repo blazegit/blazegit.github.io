@@ -5,7 +5,7 @@ categories: [thm, easy-machines]
 tags: [hash, bruteforce]    # TAG names should always be lowercase
 ---
 
-![](https://tryhackme-images.s3.amazonaws.com/room-icons/aedc6b66c222e15ff740c282a0c3f44e.png)
+![Agent Sudo room icon](https://tryhackme-images.s3.amazonaws.com/room-icons/aedc6b66c222e15ff740c282a0c3f44e.png)
 
 
 ## Enumerate

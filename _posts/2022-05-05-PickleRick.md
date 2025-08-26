@@ -5,7 +5,7 @@ categories: [thm, easy-machines]
 tags: []    # TAG names should always be lowercase
 ---
 
-![](https://i.imgur.com/o9pyhyU.jpg)
+![Pickle Rick CTF banner](https://i.imgur.com/o9pyhyU.jpg)
 
 ## Pickle Rick
 
