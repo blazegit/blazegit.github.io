@@ -22,6 +22,9 @@
 - type: linkedin
   icon: 'fab fa-linkedin'   # icons powered by <https://fontawesome.com/>
   url:  'https://www.linkedin.com/in/hern%C3%A1n-castillo-b143aa213/'                  # Fill with your Linkedin homepage
+- type: tryhackme
+  icon: 'fas fa-user-secret'
+  url: 'https://tryhackme.com/p/hdcr257'
 #
 # - type: stack-overflow
 #   icon: 'fab fa-stack-overflow'
